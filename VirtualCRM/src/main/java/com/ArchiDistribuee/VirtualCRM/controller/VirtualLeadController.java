@@ -1,7 +1,6 @@
 package com.ArchiDistribuee.VirtualCRM.controller;
 
-import java.util.Date;
-import java.util.HashSet;
+import java.util.Calendar;
 import java.util.Set;
 
 import org.springframework.format.annotation.DateTimeFormat;
@@ -25,18 +24,20 @@ public class VirtualLeadController {
     }
 
     @GetMapping("/")
-    public ResponseEntity<Set<VirtualLeadDto>> findVirtualLeads() {
-        // TODO
-        return ResponseEntity.ok(new HashSet<VirtualLeadDto>());
+    public ResponseEntity<Set<VirtualLeadDto>> findVirtualLeads(
+            @RequestParam(name = "lowAnnualRevenue", required = true) double lowAnnualRevenue,
+            @RequestParam(name = "highAnnualRevenue", required = true) double highAnnualRevenue,
+            @RequestParam(name = "state", required = true) String state) {
 
+        return ResponseEntity.ok(this.virtualLeadService.getVirtualLeads(lowAnnualRevenue, highAnnualRevenue, state));
     }
 
     @GetMapping("/byDate")
     public ResponseEntity<Set<VirtualLeadDto>> findVirtualLeadsByDate(
-            @RequestParam(name = "startDate", required = true) @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSX") Date startDate,
-            @RequestParam(name = "endDate", required = true) @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSX") Date endDate) {
-        // TODO
-        return ResponseEntity.ok(new HashSet<VirtualLeadDto>());
+            @RequestParam(name = "startDate", required = true) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) Calendar startDate,
+            @RequestParam(name = "endDate", required = true) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) Calendar endDate) {
+
+        return ResponseEntity.ok(this.virtualLeadService.getVirtualLeadsByDate(startDate, endDate));
     }
 
 }

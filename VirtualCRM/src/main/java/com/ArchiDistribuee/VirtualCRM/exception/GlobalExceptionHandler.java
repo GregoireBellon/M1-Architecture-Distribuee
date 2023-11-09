@@ -20,4 +20,24 @@ public class GlobalExceptionHandler {
         return new ResponseEntity<>(exceptionResponse, HttpStatus.INTERNAL_SERVER_ERROR);
     }
 
+    @ExceptionHandler(InvalidAnnualRevenuesException.class)
+    public final ResponseEntity<ExceptionResponse> handleInvalidAnnualRevenueException(
+            InvalidAnnualRevenuesException invalidAnnualRevenuesException,
+            WebRequest request) {
+        ExceptionResponse exceptionResponse = new ExceptionResponse(LocalDateTime.now(),
+                invalidAnnualRevenuesException.getMessage(),
+                request.getDescription(false));
+        return new ResponseEntity<>(exceptionResponse, HttpStatus.BAD_REQUEST);
+    }
+
+    @ExceptionHandler(InvalidDatesException.class)
+    public final ResponseEntity<ExceptionResponse> handleInvalidDatesException(
+            InvalidDatesException invalidDatesException,
+            WebRequest request) {
+        ExceptionResponse exceptionResponse = new ExceptionResponse(LocalDateTime.now(),
+                invalidDatesException.getMessage(),
+                request.getDescription(false));
+        return new ResponseEntity<>(exceptionResponse, HttpStatus.BAD_REQUEST);
+    }
+
 }
