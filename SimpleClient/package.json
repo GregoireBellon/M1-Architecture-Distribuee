@@ -13,9 +13,18 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "@types/node": "^20.8.5",
-    "commander": "^11.1.0",
-    "figlet": "^1.6.0",
-    "typescript": "^5.2.2"
+    "commander": "11.1.0",
+    "figlet": "1.6.0"
+  },
+  "devDependencies": {
+    "@types/figlet": "1.5.8",
+    "@types/node": "20.8.5",
+    "@typescript-eslint/eslint-plugin": "6.10.0",
+    "@typescript-eslint/parser": "6.10.0",
+    "eslint": "8.53.0",
+    "eslint-config-prettier": "9.0.0",
+    "eslint-plugin-prettier": "5.0.1",
+    "prettier": "3.0.3",
+    "typescript": "5.2.2"
   }
 }
