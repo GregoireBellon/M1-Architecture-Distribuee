@@ -62,6 +62,23 @@ program
     const leads = inputLeadsByDate(date_inf, date_sup);
 
     display(leads);
+  })
+
+program.command('salary')
+  .description('Récupérer les leads en fonction de salaire')
+  .argument('<borne_inf/?>', 'la borne inférieure (? si indéfinie)')
+  .argument('<borne_sup/?>', 'la borne supérieure (? si indéfinie)')
+  .action((borne_inf: string, borne_sup: string) => {
+
+    const salaire_inf = parseFloat(borne_inf), salaire_sup = parseFloat(borne_sup)
+
+    if (salaire_inf > salaire_sup) {
+      throw new Error("La borne supérieur est plus élevée que la borne inférieure");
+    }
+
+    const leads = inputLeadsBySalary(salaire_inf, salaire_sup);
+
+    display(leads);
   });
 
 program
@@ -86,7 +103,12 @@ program
 
 program.description("Un CLI pour appeler l'api VirtualCRM");
 
-program.parse();
+
+try {
+  program.parse();
+} catch (error) {
+  console.error("[ERREUR :", (error as Error).message, "]");
+}
 
 // Get the leads between a date and another
 // Get the leads between a salary and another
