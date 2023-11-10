@@ -40,23 +40,26 @@ public class LeadRepository {
     }
 
     public static LeadRepository getInstance() {
+
         if (instance != null)
             return instance;
 
-        return new LeadRepository();
+        instance = new LeadRepository();
+
+        return instance;
     }
 
     public Set<InternalLeadDto> findLeadsBySalary(double minSalaire, double maxSalaire) {
         return LeadRepository.leadDTOs.stream()
-                .filter(Lead -> Lead.annualRevenue() >= minSalaire)
-                .filter(Lead -> Lead.annualRevenue() <= maxSalaire)
+                .filter(lead -> lead.annualRevenue() >= minSalaire)
+                .filter(lead -> lead.annualRevenue() <= maxSalaire)
                 .collect(Collectors.toSet());
     }
 
     public Set<InternalLeadDto> findLeadsByCreationDate(LocalDateTime minDate, LocalDateTime maxDate) {
         return LeadRepository.leadDTOs.stream()
-                .filter(Lead -> Lead.creationDate().isBefore(maxDate))
-                .filter(Lead -> Lead.creationDate().isAfter(minDate))
+                .filter(lead -> lead.creationDate() == null ? false : lead.creationDate().isBefore(maxDate))
+                .filter(lead -> lead.creationDate() == null ? false : lead.creationDate().isAfter(minDate))
                 .collect(Collectors.toSet());
     }
 

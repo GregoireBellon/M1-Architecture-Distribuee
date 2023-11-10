@@ -4,14 +4,21 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.fail;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import internalcrm.models.InternalLeadDto;
 
 public class LeadServiceTest {
 
-    private final static LeadService leadService = new LeadServiceImpl();
+    private LeadService leadService;
+
+    @BeforeEach
+    private void initLeadService() {
+        this.leadService = new LeadServiceImpl();
+    }
 
     @Test
     public void whenGetLeadsResultShoudBeValid() {
@@ -54,7 +61,8 @@ public class LeadServiceTest {
         final var allLeads = leadService.getAllLeads();
         final int initialSize = allLeads.size();
 
-        leadService.addLead(new InternalLeadDto(null, null, 0, null, null, null, null, null, null, null, null));
+        leadService.addLead(
+                new InternalLeadDto("null", null, 0, null, null, null, null, null, LocalDateTime.now(), null, null));
 
         assertEquals(initialSize + 1, leadService.getAllLeads().size());
 
