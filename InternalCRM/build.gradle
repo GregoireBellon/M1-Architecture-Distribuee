@@ -22,7 +22,8 @@ repositories {
 dependencies {
     // This dependency is used by the application.
     implementation 'com.google.guava:guava:32.1.1-jre'
-        implementation 'org.apache.thrift:libthrift:0.14.1'
+    implementation 'org.apache.thrift:libthrift:0.14.1'
+    implementation 'com.github.javafaker:javafaker:1.0.2'
 }
 
 testing {
