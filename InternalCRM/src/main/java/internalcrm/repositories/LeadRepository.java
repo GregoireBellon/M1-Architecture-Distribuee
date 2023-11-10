@@ -1,7 +1,7 @@
 package internalcrm.repositories;
 
-import java.time.LocalDateTime;
 import java.time.ZoneId;
+import java.time.ZonedDateTime;
 import java.util.HashSet;
 import java.util.Set;
 import java.util.concurrent.TimeUnit;
@@ -9,19 +9,19 @@ import java.util.stream.Collectors;
 
 import com.github.javafaker.Faker;
 
-import internalcrm.models.InternalLeadDto;
+import internalcrm.models.InternalLead;
 
 public class LeadRepository {
 
     private static LeadRepository instance = null;
 
     private static final Faker faker = new Faker();
-    private static final Set<InternalLeadDto> leadDTOs = new HashSet<>();
+    private static final Set<InternalLead> leadDTOs = new HashSet<>();
 
     static {
         for (int i = 0; i < 1000; i++) {
             leadDTOs.add(
-                    new InternalLeadDto("INTERN_" + i,
+                    new InternalLead("INTERN_" + i,
                             faker.name().fullName(),
                             faker.number().randomDouble(2, 25, 125),
                             faker.phoneNumber().cellPhone(),
@@ -29,8 +29,7 @@ public class LeadRepository {
                             faker.address().zipCode(),
                             faker.address().cityName(),
                             faker.address().country(),
-                            faker.date().past(30 * 365, TimeUnit.DAYS).toInstant().atZone(ZoneId.systemDefault())
-                                    .toLocalDateTime(),
+                            faker.date().past(30 * 365, TimeUnit.DAYS).toInstant().atZone(ZoneId.systemDefault()),
                             faker.company().name(),
                             faker.address().state()));
         }
@@ -49,29 +48,29 @@ public class LeadRepository {
         return instance;
     }
 
-    public Set<InternalLeadDto> findLeadsBySalary(double minSalaire, double maxSalaire) {
+    public Set<InternalLead> findLeadsBySalary(double minSalaire, double maxSalaire) {
         return LeadRepository.leadDTOs.stream()
-                .filter(lead -> lead.annualRevenue() >= minSalaire)
-                .filter(lead -> lead.annualRevenue() <= maxSalaire)
+                .filter(lead -> lead.getAnnualRevenue() >= minSalaire)
+                .filter(lead -> lead.getAnnualRevenue() <= maxSalaire)
                 .collect(Collectors.toSet());
     }
 
-    public Set<InternalLeadDto> findLeadsByCreationDate(LocalDateTime minDate, LocalDateTime maxDate) {
+    public Set<InternalLead> findLeadsByCreationDate(ZonedDateTime minDate, ZonedDateTime maxDate) {
         return LeadRepository.leadDTOs.stream()
-                .filter(lead -> lead.creationDate() == null ? false : lead.creationDate().isBefore(maxDate))
-                .filter(lead -> lead.creationDate() == null ? false : lead.creationDate().isAfter(minDate))
+                .filter(lead -> lead.getCreationDate() == null ? false : lead.getCreationDate().isBefore(maxDate))
+                .filter(lead -> lead.getCreationDate() == null ? false : lead.getCreationDate().isAfter(minDate))
                 .collect(Collectors.toSet());
     }
 
-    public void addLead(InternalLeadDto internalLead) {
+    public void addLead(InternalLead internalLead) {
         LeadRepository.leadDTOs.add(internalLead);
     }
 
     public boolean deleteLead(String leadId) {
-        return LeadRepository.leadDTOs.removeIf(lead -> lead.id().equals(leadId));
+        return LeadRepository.leadDTOs.removeIf(lead -> lead.getId().equals(leadId));
     }
 
-    public Set<InternalLeadDto> findAll() {
+    public Set<InternalLead> findAll() {
         return LeadRepository.leadDTOs;
     }
 

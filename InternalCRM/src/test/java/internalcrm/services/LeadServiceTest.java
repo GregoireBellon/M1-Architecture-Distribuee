@@ -3,17 +3,18 @@ package internalcrm.services;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.fail;
 
-import java.time.LocalDate;
-import java.time.LocalDateTime;
+import java.time.ZonedDateTime;
 
+import org.apache.thrift.TException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import internalcrm.models.InternalLeadDto;
+import internalcrm.services.thrift.impl.InternalLeadDTO;
+import internalcrm.services.thrift.impl.LeadService;
 
 public class LeadServiceTest {
 
-    private LeadService leadService;
+    private LeadService.Iface leadService;
 
     @BeforeEach
     private void initLeadService() {
@@ -21,33 +22,37 @@ public class LeadServiceTest {
     }
 
     @Test
-    public void whenGetLeadsResultShoudBeValid() {
+    public void whenGetLeadsResultShoudBeValid() throws TException {
         final var leads = leadService.getLeads(20D, 200D);
 
         leads.forEach(lead -> {
-            if (lead.annualRevenue() < 20D || lead.annualRevenue() > 200D)
-                fail(lead.id() + " revenu annuel : " + lead.annualRevenue() + " n'est pas dans l'intervalle [20,200]");
+            if (lead.getAnnualRevenue() < 20D || lead.getAnnualRevenue() > 200D)
+                fail(lead.getId() + " revenu annuel : " + lead.getAnnualRevenue()
+                        + " n'est pas dans l'intervalle [20,200]");
         });
     }
 
     @Test
-    public void whenGetLeadsByDateResultShouldBeValid() {
+    public void whenGetLeadsByDateResultShouldBeValid() throws TException {
 
-        final var borneInf = LocalDate.now().minusYears(5);
-        final var borneSup = LocalDate.now();
+        final var borneInf = ZonedDateTime.now().minusYears(5);
+        final var borneSup = ZonedDateTime.now();
 
-        final var leads = leadService.getLeadsByDate(borneInf, borneSup);
+        final var leads = leadService.getLeadsByDate(borneInf.toString(), borneSup.toString());
 
         leads.forEach(lead -> {
-            if (lead.creationDate().isBefore(borneInf.atStartOfDay())
-                    || lead.creationDate().isAfter(borneSup.atStartOfDay()))
-                fail(lead.id() + " date de création : " + lead.creationDate() + " n'est pas dans l'intervalle [ "
+
+            final ZonedDateTime dateLead = ZonedDateTime.parse(lead.getCreationDate());
+
+            if (dateLead.isBefore(borneInf)
+                    || dateLead.isAfter(borneSup))
+                fail(lead.getId() + " date de création : " + lead.getCreationDate() + " n'est pas dans l'intervalle [ "
                         + borneInf + "," + borneSup + "]");
         });
     }
 
     @Test
-    public void whenDeleteLeadsShouldDelete() {
+    public void whenDeleteLeadsShouldDelete() throws TException {
         final var allLeads = leadService.getAllLeads();
         final int initialSize = allLeads.size();
 
@@ -57,12 +62,13 @@ public class LeadServiceTest {
     }
 
     @Test
-    public void whenAddLeadShouldAdd() {
+    public void whenAddLeadShouldAdd() throws TException {
         final var allLeads = leadService.getAllLeads();
         final int initialSize = allLeads.size();
 
         leadService.addLead(
-                new InternalLeadDto("null", null, 0, null, null, null, null, null, LocalDateTime.now(), null, null));
+                new InternalLeadDTO("null", null, 0, null, null, null, null, null, ZonedDateTime.now().toString(), null,
+                        null));
 
         assertEquals(initialSize + 1, leadService.getAllLeads().size());
 
