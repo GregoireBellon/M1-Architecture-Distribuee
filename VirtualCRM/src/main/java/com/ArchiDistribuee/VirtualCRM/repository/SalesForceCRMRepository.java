@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Repository;
 
 import java.util.HashSet;
+import java.time.ZonedDateTime;
 import java.util.Calendar;
 
 @Repository
@@ -24,7 +25,7 @@ public class SalesForceCRMRepository {
     }
 
     // TODO
-    public Set<SalesForceLead> getLeadsByDate(Calendar startDate, Calendar endDate) {
+    public Set<SalesForceLead> getLeadsByDate(ZonedDateTime startDate, ZonedDateTime endDate) {
         return new HashSet<SalesForceLead>();
     }
 }
