@@ -23,7 +23,7 @@ public class VirtualLeadController {
         this.virtualLeadService = virtualLeadService;
     }
 
-    @GetMapping("/")
+    @GetMapping
     public ResponseEntity<Set<VirtualLeadDto>> findVirtualLeads(
             @RequestParam(name = "lowAnnualRevenue", required = true) double lowAnnualRevenue,
             @RequestParam(name = "highAnnualRevenue", required = true) double highAnnualRevenue,
@@ -34,8 +34,8 @@ public class VirtualLeadController {
 
     @GetMapping("/byDate")
     public ResponseEntity<Set<VirtualLeadDto>> findVirtualLeadsByDate(
-            @RequestParam(name = "startDate", required = true) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) Calendar startDate,
-            @RequestParam(name = "endDate", required = true) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) Calendar endDate) {
+            @RequestParam(name = "startDate", required = true) @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSX") Calendar startDate,
+            @RequestParam(name = "endDate", required = true) @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSX") Calendar endDate) {
 
         return ResponseEntity.ok(this.virtualLeadService.getVirtualLeadsByDate(startDate, endDate));
     }
