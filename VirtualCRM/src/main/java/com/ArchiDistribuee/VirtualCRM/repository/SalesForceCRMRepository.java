@@ -6,7 +6,6 @@ import lombok.Setter;
 
 import java.util.Set;
 
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Repository;
 
 import java.util.HashSet;
@@ -15,7 +14,6 @@ import java.time.ZonedDateTime;
 @Setter
 @Repository
 public class SalesForceCRMRepository {
-
     @Value("${spring.datasource.salesforce.password}")
     private String password;
 

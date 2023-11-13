@@ -1,115 +1,124 @@
-import { Lead } from "./lead";
+import axios from 'axios';
+import { Command } from 'commander';
+import figlet from 'figlet';
+import { DateTime } from 'luxon';
 
-import figlet from "figlet";
-import { Command } from "commander";
+import { Lead } from './lead';
 
-function parseDate(date_in: string): Date {
-  if (date_in.split.length != 3) {
-    throw new Error("Date mal formatée (rappel : dd/mm/yyyy)");
+const httpClient = axios.create({
+  baseURL: process.env.API_BASE_URL ?? 'http://localhost:8080',
+});
+
+const logger = {
+  debug: (msg: string): void => {
+    if (process.env.DEBUG === '1') {
+      console.log(`[debug] ${msg}`);
+    }
+  },
+};
+
+function parseDate(inputDate: string): DateTime {
+  const date = DateTime.fromFormat(inputDate, 'dd/MM/yyyy');
+  if (!date.isValid) {
+    throw new Error('La date doit être au format dd/MM/yyyy');
   }
+  return date;
+}
 
-  const [day_str, month_str, year_str] = date_in.split("/");
-
-  const day = parseInt(day_str),
-    month = parseInt(month_str),
-    year = parseInt(year_str);
-
-  if (month > 12 || month < 1) {
-    throw new Error("Date mal formatée (rappel : dd/mm/yyyy)");
+function parseSalary(salary: string): number {
+  try {
+    const result = parseFloat(salary);
+    if (Number.isNaN(result)) {
+      throw new Error();
+    }
+    return result;
+  } catch (e) {
+    throw new Error(`Salaire ${salary} invalide`);
   }
-
-  return new Date(year, month - 1, day);
 }
 
-function inputLeadsByDate(borne_inf: Date, borne_sup: Date): Array<Lead> {
-  console.log(`Appel des leads par date entre ${borne_inf} et ${borne_sup}`);
-  return [];
+async function inputLeadsByDate(startDate: DateTime, endDate: DateTime): Promise<Array<Lead>> {
+  try {
+    const { data } = await httpClient.get('/leads/byDate', {
+      params: { startDate: startDate.toISO(), endDate: endDate.toISO() },
+    });
+    return data as Lead[];
+  } catch (e) {
+    logger.debug((e as Error).message);
+    throw new Error('Impossible de récupérer les données');
+  }
 }
 
-function inputLeadsBySalary(borne_inf: number, borne_sup: number): Array<Lead> {
-  console.log(
-    `Appel des leads par salaire, entre ${borne_inf} et ${borne_sup}`
-  );
-  return [];
+async function inputLeadsBySalary(minSalary: number, maxSalary: number, state: string): Promise<Array<Lead>> {
+  try {
+    const { data } = await httpClient.get('/leads', {
+      params: { lowAnnualRevenue: minSalary, highAnnualRevenue: maxSalary, state },
+    });
+    return data as Lead[];
+  } catch (e) {
+    logger.debug((e as Error).message);
+    throw new Error('Impossible de récupérer les données');
+  }
 }
 
-function display(leads: Array<any>) {
+function display(leads: Array<Lead>) {
   console.log(`${leads.length} leads :`);
   console.table(leads);
 }
 
-console.log(figlet.textSync("CRM Commander"));
-
 const program = new Command();
 
 program
-  .command("date")
-  .description(
-    'Récupérer les leads en fonction de leur date d\'ajout au format "dd/mm/yyyy"'
-  )
-  .argument("<borne_inf/?>", "la borne inférieure (? si indéfinie)")
-  .argument("<borne_sup/?>", "la borne supérieure (? si indéfinie)")
-  .action((borne_inf: string, borne_sup: string) => {
-    const date_inf = parseDate(borne_inf),
-      date_sup = parseDate(borne_sup);
-
-    if (date_inf > date_sup) {
-      throw new Error(
-        "La borne inférieure est plus élevée que la borne supérieure"
-      );
-    }
-
-    const leads = inputLeadsByDate(date_inf, date_sup);
-
-    display(leads);
-  })
-
-program.command('salary')
-  .description('Récupérer les leads en fonction de salaire')
+  .command('date')
+  .description('Récupérer les leads en fonction de leur date d\'ajout au format "dd/mm/yyyy"')
   .argument('<borne_inf/?>', 'la borne inférieure (? si indéfinie)')
   .argument('<borne_sup/?>', 'la borne supérieure (? si indéfinie)')
-  .action((borne_inf: string, borne_sup: string) => {
+  .action(async (borne_inf: string, borne_sup: string) => {
+    const startDate = parseDate(borne_inf);
+    const endDate = parseDate(borne_sup);
 
-    const salaire_inf = parseFloat(borne_inf), salaire_sup = parseFloat(borne_sup)
-
-    if (salaire_inf > salaire_sup) {
-      throw new Error("La borne supérieur est plus élevée que la borne inférieure");
+    if (endDate < startDate) {
+      throw new Error('La borne inférieure est plus élevée que la borne supérieure');
     }
 
-    const leads = inputLeadsBySalary(salaire_inf, salaire_sup);
+    console.log(`Appel des leads par date entre ${borne_inf} et ${borne_sup}`);
+
+    const leads = await inputLeadsByDate(startDate, endDate);
 
     display(leads);
   });
 
 program
-  .command("salary")
-  .description("Récupérer les leads en fonction de salaire")
-  .argument("<borne_inf/?>", "la borne inférieure (? si indéfinie)")
-  .argument("<borne_sup/?>", "la borne supérieure (? si indéfinie)")
-  .action((borne_inf: string, borne_sup: string) => {
-    const salaire_inf = parseFloat(borne_inf),
-      salaire_sup = parseFloat(borne_sup);
+  .command('salary')
+  .description('Récupérer les leads en fonction de salaire')
+  .argument('<borne_inf/?>', 'la borne inférieure (? si indéfinie)')
+  .argument('<borne_sup/?>', 'la borne supérieure (? si indéfinie)')
+  .argument('<etat/?>')
+  .action(async (borne_inf: string, borne_sup: string, etat: string) => {
+    const minSalary = parseSalary(borne_inf);
+    const maxSalary = parseSalary(borne_sup);
+    const state = etat;
 
-    if (salaire_inf > salaire_sup) {
-      throw new Error(
-        "La borne supérieur est plus élevée que la borne inférieure"
-      );
+    if (minSalary > maxSalary) {
+      throw new Error('La borne supérieur est plus élevée que la borne inférieure');
     }
 
-    const leads = inputLeadsBySalary(salaire_inf, salaire_sup);
+    console.log(`Appel des leads par salaire, entre ${borne_inf} et ${borne_sup}`);
+
+    const leads = await inputLeadsBySalary(minSalary, maxSalary, state);
 
     display(leads);
   });
 
 program.description("Un CLI pour appeler l'api VirtualCRM");
 
-
-try {
-  program.parse();
-} catch (error) {
-  console.error("[ERREUR :", (error as Error).message, "]");
+async function main() {
+  try {
+    console.log(figlet.textSync('CRM Commander'));
+    await program.parseAsync();
+  } catch (error) {
+    console.error('[ERREUR :', (error as Error).message, ']');
+  }
 }
 
-// Get the leads between a date and another
-// Get the leads between a salary and another
-// Free request
+void main();

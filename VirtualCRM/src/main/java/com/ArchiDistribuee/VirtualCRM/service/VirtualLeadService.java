@@ -75,7 +75,8 @@ public class VirtualLeadService {
 
     // TODO
     public Set<VirtualLeadDto> getVirtualLeadsByDate(ZonedDateTime startDate, ZonedDateTime endDate) {
-        if (endDate.isBefore(startDate)) {
+
+      if (endDate.isBefore(startDate)) {
             throw new InvalidDatesException(startDate, endDate);
         }
 
