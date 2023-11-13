@@ -77,7 +77,6 @@ public class VirtualLeadService {
                 .collect(Collectors.toSet());
     }
 
-    // TODO
     public Set<VirtualLeadDto> getVirtualLeadsByDate(Calendar startDate, Calendar endDate) {
         if (endDate.before(startDate)) {
             throw new InvalidDatesException(startDate, endDate);
