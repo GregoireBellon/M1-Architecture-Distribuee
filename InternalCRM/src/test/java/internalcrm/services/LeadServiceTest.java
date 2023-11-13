@@ -9,7 +9,7 @@ import org.apache.thrift.TException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import internalcrm.services.thrift.impl.InternalLeadDTO;
+import internalcrm.services.thrift.impl.ThriftInternalLeadDTO;
 import internalcrm.services.thrift.impl.LeadService;
 
 public class LeadServiceTest {
@@ -18,7 +18,7 @@ public class LeadServiceTest {
 
     @BeforeEach
     private void initLeadService() {
-        this.leadService = new LeadServiceImpl();
+        this.leadService = LeadServiceImpl.getInstance();
     }
 
     @Test
@@ -67,7 +67,9 @@ public class LeadServiceTest {
         final int initialSize = allLeads.size();
 
         leadService.addLead(
-                new InternalLeadDTO("null", null, 0, null, null, null, null, null, ZonedDateTime.now().toString(), null,
+                new ThriftInternalLeadDTO("null", null, null, 0, null, null, null, null, null,
+                        ZonedDateTime.now().toString(),
+                        null,
                         null));
 
         assertEquals(initialSize + 1, leadService.getAllLeads().size());

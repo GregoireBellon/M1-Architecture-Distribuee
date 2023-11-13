@@ -22,7 +22,7 @@ public class VirtualLead {
     private String company;
     private String state;
 
-    public static VirtualLead fromTypedInternalLeadDTO(TypedInternalLeadDTO internalLead) {
+    public static VirtualLead fromTypedInternalLeadDTO(InternalLeadDTO internalLead) {
         return new VirtualLead(
                 internalLead.firstName(),
                 internalLead.lastName(),

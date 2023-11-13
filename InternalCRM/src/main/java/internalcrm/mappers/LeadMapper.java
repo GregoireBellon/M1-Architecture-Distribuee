@@ -5,15 +5,15 @@ import java.util.Set;
 import org.mapstruct.Mapper;
 
 import internalcrm.models.InternalLead;
-import internalcrm.services.thrift.impl.InternalLeadDTO;;
+import internalcrm.services.thrift.impl.ThriftInternalLeadDTO;;
 
 @Mapper
 public interface LeadMapper {
 
-    InternalLeadDTO toInternalLeadDto(InternalLead lead);
+    ThriftInternalLeadDTO toInternalLeadDto(InternalLead lead);
 
-    Set<InternalLeadDTO> toInternalLeadDto(Set<InternalLead> lead);
+    Set<ThriftInternalLeadDTO> toInternalLeadDto(Set<InternalLead> lead);
 
-    InternalLead toInternalLead(InternalLeadDTO lead);
+    InternalLead toInternalLead(ThriftInternalLeadDTO lead);
 
 }

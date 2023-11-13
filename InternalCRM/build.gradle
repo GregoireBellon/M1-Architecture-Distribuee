@@ -48,7 +48,9 @@ java {
 }
 
 compileThrift {
-    thriftExecutable "lib/thrift/0.17.0/thrift.${osdetector.classifier}"
+    thriftExecutable "../thrift/libs/0.17.0/thrift.${osdetector.classifier}"
+    sourceItems "../thrift/src/"
+    sourceDir "../thrift/src/"
 }
 
 application {

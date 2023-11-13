@@ -2,6 +2,8 @@ package com.ArchiDistribuee.VirtualCRM.repository;
 
 import com.ArchiDistribuee.VirtualCRM.entity.SalesForceLead;
 
+import lombok.Setter;
+
 import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Value;
@@ -9,14 +11,15 @@ import org.springframework.stereotype.Repository;
 
 import java.util.HashSet;
 import java.time.ZonedDateTime;
-import java.util.Calendar;
 
+@Setter
 @Repository
 public class SalesForceCRMRepository {
-    @Value("${salesforcepassword}")
+
+    @Value("${spring.datasource.salesforce.password}")
     private String password;
 
-    @Value("${salesforcelogin}")
+    @Value("${spring.datasource.salesforce.login}")
     private String login;
 
     // TODO

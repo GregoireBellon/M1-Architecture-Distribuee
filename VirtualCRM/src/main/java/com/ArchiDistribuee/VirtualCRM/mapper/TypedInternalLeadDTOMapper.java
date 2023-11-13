@@ -4,19 +4,19 @@ import java.util.Set;
 
 import org.mapstruct.Mapper;
 
-import com.ArchiDistribuee.VirtualCRM.entity.TypedInternalLeadDTO;
+import com.ArchiDistribuee.VirtualCRM.entity.InternalLeadDTO;
 
-import internalcrm.services.thrift.impl.InternalLeadDTO;
+import internalcrm.services.thrift.impl.ThriftInternalLeadDTO;
 
 @Mapper
 public interface TypedInternalLeadDTOMapper {
 
-    TypedInternalLeadDTO fromInternalLeadDTO(InternalLeadDTO lead);
+    InternalLeadDTO fromThriftInternalLeadDTO(ThriftInternalLeadDTO lead);
 
-    Set<TypedInternalLeadDTO> fromInternalLeadDTO(Set<InternalLeadDTO> leads);
+    Set<InternalLeadDTO> fromThriftInternalLeadDTO(Set<ThriftInternalLeadDTO> leads);
 
-    InternalLeadDTO toInternalLeadDTO(TypedInternalLeadDTO lead);
+    ThriftInternalLeadDTO toThriftInternalLeadDTO(InternalLeadDTO lead);
 
-    Set<InternalLeadDTO> toInternalLeadDTO(Set<TypedInternalLeadDTO> leads);
+    Set<ThriftInternalLeadDTO> toThriftInternalLeadDTO(Set<InternalLeadDTO> leads);
 
 }
