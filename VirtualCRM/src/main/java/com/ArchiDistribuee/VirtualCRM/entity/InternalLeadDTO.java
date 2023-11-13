@@ -1,17 +1,18 @@
-package internalcrm.models;
+package com.ArchiDistribuee.VirtualCRM.entity;
 
-import java.time.LocalDateTime;
+import java.time.ZonedDateTime;
 
-public record InternalLeadDto(
+public record InternalLeadDTO(
                 String id,
-                String name,
+                String firstName,
+                String lastName,
                 double annualRevenue,
                 String phone,
                 String street,
                 String postalCode,
                 String city,
                 String country,
-                LocalDateTime creationDate,
+                ZonedDateTime creationDate,
                 String company,
                 String state) {
 }

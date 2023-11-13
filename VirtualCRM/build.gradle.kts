@@ -4,6 +4,8 @@ plugins {
 	id("io.spring.dependency-management") version "1.1.3"
 	id("io.freefair.lombok") version "8.4"
 
+	id("com.google.osdetector") version "1.7.3"
+	id("com.linecorp.thrift-gradle-plugin") version "+"
 }
 
 group = "com.ArchiDistribuee"
@@ -22,10 +24,34 @@ dependencies {
 	developmentOnly("org.springframework.boot:spring-boot-devtools")
 	implementation("org.springframework.boot:spring-boot-starter-web")
 	testImplementation("org.springframework.boot:spring-boot-starter-test")
+
 	implementation ("org.mapstruct:mapstruct:1.5.5.Final")
     annotationProcessor ("org.mapstruct:mapstruct-processor:1.5.5.Final")
+
+	implementation("org.apache.thrift:libthrift:0.14.1")
+	
 }
 
-tasks.withType<Test> {
-	useJUnitPlatform()
+
+testing {
+	suites {
+		val integrationTest by registering(JvmTestSuite::class){
+
+			dependencies{
+				implementation(project())
+			}
+		}
+	}
+}
+
+tasks {	
+	
+	withType<Test> {
+		useJUnitPlatform()
+	}
+
+	compileThrift{
+		thriftExecutable = "../thrift/libs/0.17.0/thrift.${osdetector.classifier}"
+		sourceItems.from(project.layout.files("../thrift/src"))
+	}
 }
