@@ -1,15 +1,20 @@
-package com.ArchiDistribuee.VirtualCRM.entity;
+package internalcrm.models;
 
-import java.util.Calendar;
+import java.time.ZonedDateTime;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
+import lombok.ToString;
 
-@AllArgsConstructor
+@ToString
 @Getter
 @Setter
+@NoArgsConstructor
+@AllArgsConstructor
 public class InternalLead {
+    private String id;
     private String firstName;
     private String lastName;
     private double annualRevenue;
@@ -18,7 +23,7 @@ public class InternalLead {
     private String postalCode;
     private String city;
     private String country;
-    private Calendar creationDate;
+    private ZonedDateTime creationDate;
     private String company;
     private String state;
 }

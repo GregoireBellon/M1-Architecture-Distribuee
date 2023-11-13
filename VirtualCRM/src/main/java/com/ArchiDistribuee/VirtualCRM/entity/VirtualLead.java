@@ -1,7 +1,6 @@
 package com.ArchiDistribuee.VirtualCRM.entity;
 
-import java.util.Calendar;
-
+import java.time.ZonedDateTime;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
@@ -18,24 +17,25 @@ public class VirtualLead {
     private String postalCode;
     private String city;
     private String country;
-    private Calendar creationDate;
+    private ZonedDateTime creationDate;
     private GeographicPoint geographicPoint;
     private String company;
     private String state;
 
-    public static VirtualLead fromInternalLead(InternalLead internalLead) {
-        return new VirtualLead(internalLead.getFirstName(),
-                internalLead.getLastName(),
-                internalLead.getAnnualRevenue(),
-                internalLead.getPhone(),
-                internalLead.getStreet(),
-                internalLead.getPostalCode(),
-                internalLead.getCity(),
-                internalLead.getCountry(),
-                internalLead.getCreationDate(),
+    public static VirtualLead fromTypedInternalLeadDTO(InternalLeadDTO internalLead) {
+        return new VirtualLead(
+                internalLead.firstName(),
+                internalLead.lastName(),
+                internalLead.annualRevenue(),
+                internalLead.phone(),
+                internalLead.street(),
+                internalLead.postalCode(),
+                internalLead.city(),
+                internalLead.country(),
+                internalLead.creationDate(),
                 null,
-                internalLead.getCompany(),
-                internalLead.getState());
+                internalLead.company(),
+                internalLead.state());
     }
 
     // TODO

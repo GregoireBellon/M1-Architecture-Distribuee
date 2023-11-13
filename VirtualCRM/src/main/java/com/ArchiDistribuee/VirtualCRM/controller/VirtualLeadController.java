@@ -1,6 +1,6 @@
 package com.ArchiDistribuee.VirtualCRM.controller;
 
-import java.util.Calendar;
+import java.time.ZonedDateTime;
 import java.util.Set;
 
 import org.springframework.format.annotation.DateTimeFormat;
@@ -34,8 +34,8 @@ public class VirtualLeadController {
 
     @GetMapping("/byDate")
     public ResponseEntity<Set<VirtualLeadDto>> findVirtualLeadsByDate(
-            @RequestParam(name = "startDate", required = true) @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSX") Calendar startDate,
-            @RequestParam(name = "endDate", required = true) @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSX") Calendar endDate) {
+            @RequestParam(name = "startDate", required = true) @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSX") ZonedDateTime startDate,
+            @RequestParam(name = "endDate", required = true) @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSX") ZonedDateTime endDate) {
 
         return ResponseEntity.ok(this.virtualLeadService.getVirtualLeadsByDate(startDate, endDate));
     }
