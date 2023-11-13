@@ -29,16 +29,27 @@ dependencies {
     annotationProcessor ("org.mapstruct:mapstruct-processor:1.5.5.Final")
 
 	implementation("org.apache.thrift:libthrift:0.14.1")
+	
 }
 
 
+testing {
+	suites {
+		val integrationTest by registering(JvmTestSuite::class){
 
-tasks.withType<Test> {
-	useJUnitPlatform()
+			dependencies{
+				implementation(project())
+			}
+		}
+	}
 }
-
 
 tasks {	
+	
+	withType<Test> {
+		useJUnitPlatform()
+	}
+
 	compileThrift{
 		thriftExecutable = "../thrift/libs/0.17.0/thrift.${osdetector.classifier}"
 		sourceItems.from(project.layout.files("../thrift/src"))
