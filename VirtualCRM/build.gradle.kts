@@ -57,7 +57,6 @@ tasks {
 	}
 
 	compileThrift{
-		thriftExecutable = "../thrift/libs/0.17.0/thrift.${osdetector.classifier}"
 		sourceItems.from(project.layout.files("../thrift/src"))
 	}
 }
