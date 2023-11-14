@@ -49,7 +49,7 @@ public class App {
             server.serve();
         } catch (Exception e) {
 
-            log.error("Erreur lors ");
+            log.error("Erreur dans le service Thrift :");
 
             e.printStackTrace();
 
