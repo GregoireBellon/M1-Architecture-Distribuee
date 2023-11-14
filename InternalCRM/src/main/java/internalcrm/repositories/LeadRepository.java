@@ -3,6 +3,7 @@ package internalcrm.repositories;
 import java.time.ZoneId;
 import java.time.ZonedDateTime;
 import java.util.HashSet;
+import java.util.Locale;
 import java.util.Set;
 import java.util.concurrent.TimeUnit;
 import java.util.stream.Collectors;
@@ -15,7 +16,7 @@ public class LeadRepository {
 
     private static LeadRepository instance = null;
 
-    private static final Faker faker = new Faker();
+    private static final Faker faker = new Faker(Locale.FRENCH);
     private static final Set<InternalLead> leadDTOs = new HashSet<>();
 
     static {
