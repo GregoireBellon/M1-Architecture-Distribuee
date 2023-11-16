@@ -38,7 +38,7 @@ public class VirtualLeadService {
 
         Set<InternalLead> internalLeads = new HashSet<InternalLead>();
         try {
-            internalLeads = internalCRMRepository.getLeads(lowAnnualRevenue, highAnnualRevenue);
+            internalLeads = internalCRMRepository.getLeads(lowAnnualRevenue, highAnnualRevenue, state);
         } catch (Exception e) {
             log.error("Cannot fetch from internal CRM", e);
         }

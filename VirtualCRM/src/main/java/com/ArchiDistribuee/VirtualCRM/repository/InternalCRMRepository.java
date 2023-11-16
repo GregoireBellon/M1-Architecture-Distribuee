@@ -67,10 +67,10 @@ public class InternalCRMRepository implements InitializingBean {
         return Optional.empty();
     }
 
-    public Set<InternalLead> getLeads(double lowAnnualRevenue, double highAnnualRevenue) {
+    public Set<InternalLead> getLeads(double lowAnnualRevenue, double highAnnualRevenue, String state) {
 
         final Optional<Set<ThriftInternalLeadDTO>> leads = this.transportWrapper(
-                () -> this.client.getLeads(lowAnnualRevenue, highAnnualRevenue));
+                () -> this.client.getLeads(lowAnnualRevenue, highAnnualRevenue, state));
 
         return internalLeadMapper.fromThriftInternalLeadDTO(leads.orElse(Collections.emptySet()));
     }
