@@ -23,12 +23,16 @@ public class LeadServiceTest {
 
     @Test
     public void whenGetLeadsResultShoudBeValid() throws TException {
-        final var leads = leadService.getLeads(20D, 200D);
+        String state = "Alsace";
+        final var leads = leadService.getLeads(20D, 200D, state);
 
         leads.forEach(lead -> {
             if (lead.getAnnualRevenue() < 20D || lead.getAnnualRevenue() > 200D)
                 fail(lead.getId() + " revenu annuel : " + lead.getAnnualRevenue()
                         + " n'est pas dans l'intervalle [20,200]");
+
+            if (!lead.getState().equalsIgnoreCase("Alsace"))
+                fail(lead.getState() + " n'est pas égal à " + state);
         });
     }
 

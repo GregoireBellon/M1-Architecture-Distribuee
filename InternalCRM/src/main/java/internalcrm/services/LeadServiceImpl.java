@@ -2,6 +2,7 @@ package internalcrm.services;
 
 import java.time.ZonedDateTime;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 import org.apache.thrift.TException;
 import org.mapstruct.factory.Mappers;
@@ -32,8 +33,12 @@ public class LeadServiceImpl implements LeadService.Iface {
     }
 
     @Override
-    public Set<ThriftInternalLeadDTO> getLeads(double borneInfSalaire, double borneSupSalaire) throws TException {
-        return leadMapper.toInternalLeadDto(leadRepository.findLeadsBySalary(borneInfSalaire, borneSupSalaire));
+    public Set<ThriftInternalLeadDTO> getLeads(double borneInfSalaire, double borneSupSalaire, String state)
+            throws TException {
+        return leadMapper.toInternalLeadDto(
+                leadRepository.findLeadsBySalary(borneInfSalaire, borneSupSalaire)
+                        .stream().filter(lead -> lead.getState().equalsIgnoreCase(state))
+                        .collect(Collectors.toSet()));
 
     }
 
