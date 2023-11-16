@@ -1,6 +1,5 @@
 package internalcrm.models;
 
-import java.io.Serializable;
 import java.time.ZonedDateTime;
 
 import lombok.AllArgsConstructor;
@@ -14,7 +13,7 @@ import lombok.ToString;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class InternalLead implements Serializable {
+public class InternalLead {
     private String id;
     private String name;
     private double annualRevenue;
