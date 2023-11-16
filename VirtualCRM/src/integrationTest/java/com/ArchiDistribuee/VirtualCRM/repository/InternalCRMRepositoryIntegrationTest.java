@@ -10,7 +10,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
-import com.ArchiDistribuee.VirtualCRM.entity.InternalLeadDTO;
+import com.ArchiDistribuee.VirtualCRM.entity.InternalLead;
 
 @SpringBootTest(classes = InternalCRMRepository.class)
 public class InternalCRMRepositoryIntegrationTest {
@@ -24,7 +24,7 @@ public class InternalCRMRepositoryIntegrationTest {
     @Test
     void whenGetAllShouldReturnValidResult() {
 
-        Set<InternalLeadDTO> leads = this.repository.getAllLeads();
+        Set<InternalLead> leads = this.repository.getAllLeads();
 
         assertEquals(1000, leads.size());
     }
@@ -32,7 +32,7 @@ public class InternalCRMRepositoryIntegrationTest {
     @Test
     void whenGetLeadsShouldReturnValidResult() {
 
-        Set<InternalLeadDTO> leads = this.repository.getLeads(15D, 55D);
+        Set<InternalLead> leads = this.repository.getLeads(15D, 55D);
 
         assertNotEquals(0, leads.size());
     }
@@ -40,7 +40,7 @@ public class InternalCRMRepositoryIntegrationTest {
     @Test
     void whenGetLeadsByDateShouldReturnValidResult() {
 
-        Set<InternalLeadDTO> leads = this.repository.getLeadsByDate(ZonedDateTime.now().minusYears(5),
+        Set<InternalLead> leads = this.repository.getLeadsByDate(ZonedDateTime.now().minusYears(5),
                 ZonedDateTime.now());
 
         assertNotEquals(0, leads.size());

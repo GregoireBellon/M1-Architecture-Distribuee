@@ -67,7 +67,7 @@ public class LeadServiceTest {
         final int initialSize = allLeads.size();
 
         leadService.addLead(
-                new ThriftInternalLeadDTO("null", null, null, 0, null, null, null, null, null,
+                new ThriftInternalLeadDTO("null", null, 0, null, null, null, null, null,
                         ZonedDateTime.now().toString(),
                         null,
                         null));

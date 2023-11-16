@@ -1,6 +1,9 @@
 package com.ArchiDistribuee.VirtualCRM.entity;
 
 import java.time.ZonedDateTime;
+
+import com.ArchiDistribuee.VirtualCRM.dto.InternalLeadDTO;
+
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;

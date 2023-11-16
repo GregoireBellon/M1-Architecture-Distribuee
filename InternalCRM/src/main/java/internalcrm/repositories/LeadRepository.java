@@ -23,8 +23,7 @@ public class LeadRepository {
         for (int i = 0; i < 1000; i++) {
             leadDTOs.add(
                     new InternalLead("INTERN_" + i,
-                            faker.name().firstName(),
-                            faker.name().lastName(),
+                            faker.name().lastName() + ", " + faker.name().firstName(),
                             faker.number().randomDouble(2, 25, 125),
                             faker.phoneNumber().cellPhone(),
                             faker.address().streetAddress(),
