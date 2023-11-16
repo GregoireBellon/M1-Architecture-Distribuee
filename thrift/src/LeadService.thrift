@@ -4,17 +4,16 @@ typedef string Timestamp
 
 struct ThriftInternalLeadDTO {
         1:string id,
-        2:string firstName, 
-        3:string lastName, 
-        4:double annualRevenue, 
-        5:string phone, 
-        6:string street, 
-        7:string postalCode, 
-        8:string city, 
-        9:string country, 
-        10:Timestamp creationDate, 
-        11:string company
-        12:string state
+        2:string name,
+        3:double annualRevenue, 
+        4:string phone, 
+        5:string street, 
+        6:string postalCode, 
+        7:string city, 
+        8:string country, 
+        9:Timestamp creationDate, 
+        10:string company
+        11:string state
 }
 
 service LeadService

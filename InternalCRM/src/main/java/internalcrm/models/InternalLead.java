@@ -15,8 +15,7 @@ import lombok.ToString;
 @AllArgsConstructor
 public class InternalLead {
     private String id;
-    private String firstName;
-    private String lastName;
+    private String name;
     private double annualRevenue;
     private String phone;
     private String street;

@@ -16,8 +16,8 @@ import org.springframework.beans.factory.InitializingBean;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Repository;
 
-import com.ArchiDistribuee.VirtualCRM.entity.InternalLeadDTO;
-import com.ArchiDistribuee.VirtualCRM.mapper.TypedInternalLeadDTOMapper;
+import com.ArchiDistribuee.VirtualCRM.entity.InternalLead;
+import com.ArchiDistribuee.VirtualCRM.mapper.InternalLeadMapper;
 
 import internalcrm.services.thrift.impl.ThriftInternalLeadDTO;
 import internalcrm.services.thrift.impl.LeadService;
@@ -46,8 +46,8 @@ public class InternalCRMRepository implements InitializingBean {
         this.initialisationTolerancy = initialisationTolerancy;
     }
 
-    private final TypedInternalLeadDTOMapper typedInternalLeadDTOMapper = Mappers
-            .getMapper(TypedInternalLeadDTOMapper.class);
+    private final InternalLeadMapper internalLeadMapper = Mappers
+            .getMapper(InternalLeadMapper.class);
 
     public <T> Optional<T> transportWrapper(Callable<T> clientCall) {
 
@@ -67,33 +67,33 @@ public class InternalCRMRepository implements InitializingBean {
         return Optional.empty();
     }
 
-    public Set<InternalLeadDTO> getLeads(double lowAnnualRevenue, double highAnnualRevenue) {
+    public Set<InternalLead> getLeads(double lowAnnualRevenue, double highAnnualRevenue) {
 
         final Optional<Set<ThriftInternalLeadDTO>> leads = this.transportWrapper(
                 () -> this.client.getLeads(lowAnnualRevenue, highAnnualRevenue));
 
-        return typedInternalLeadDTOMapper.fromThriftInternalLeadDTO(leads.orElse(Collections.emptySet()));
+        return internalLeadMapper.fromThriftInternalLeadDTO(leads.orElse(Collections.emptySet()));
     }
 
-    public Set<InternalLeadDTO> getLeadsByDate(ZonedDateTime startDate, ZonedDateTime endDate) {
+    public Set<InternalLead> getLeadsByDate(ZonedDateTime startDate, ZonedDateTime endDate) {
 
         final Optional<Set<ThriftInternalLeadDTO>> leads = this.transportWrapper(
                 () -> this.client.getLeadsByDate(startDate.toString(), endDate.toString()));
 
-        return typedInternalLeadDTOMapper.fromThriftInternalLeadDTO(leads.orElse(Collections.emptySet()));
+        return internalLeadMapper.fromThriftInternalLeadDTO(leads.orElse(Collections.emptySet()));
     }
 
-    public Set<InternalLeadDTO> getAllLeads() {
+    public Set<InternalLead> getAllLeads() {
 
         final Optional<Set<ThriftInternalLeadDTO>> leads = this.transportWrapper(
                 () -> this.client.getAllLeads());
 
-        return typedInternalLeadDTOMapper.fromThriftInternalLeadDTO(leads.orElse(Collections.emptySet()));
+        return internalLeadMapper.fromThriftInternalLeadDTO(leads.orElse(Collections.emptySet()));
     }
 
-    public void addLead(InternalLeadDTO lead) {
+    public void addLead(InternalLead lead) {
 
-        final var mappedLead = typedInternalLeadDTOMapper.toThriftInternalLeadDTO(lead);
+        final var mappedLead = internalLeadMapper.toThriftInternalLeadDTO(lead);
 
         this.transportWrapper(
                 () -> {
@@ -103,9 +103,9 @@ public class InternalCRMRepository implements InitializingBean {
 
     }
 
-    public void deleteLead(InternalLeadDTO lead) {
+    public void deleteLead(InternalLead lead) {
 
-        final var mappedLead = typedInternalLeadDTOMapper.toThriftInternalLeadDTO(lead);
+        final var mappedLead = internalLeadMapper.toThriftInternalLeadDTO(lead);
 
         this.transportWrapper(
                 () -> {

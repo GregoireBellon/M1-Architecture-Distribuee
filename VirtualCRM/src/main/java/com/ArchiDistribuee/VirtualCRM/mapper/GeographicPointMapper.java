@@ -11,6 +11,6 @@ public interface GeographicPointMapper {
     GeographicPointMapper INSTANCE = Mappers.getMapper(GeographicPointMapper.class);
 
     // TODO (Après avoir update GeographicPoint)
-    GeographicPointDto geographicPointToGeographicPointDto(GeographicPoint geographicPoint);
+    GeographicPointDto toGeographicPointDto(GeographicPoint geographicPoint);
 
 }

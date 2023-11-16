@@ -27,6 +27,7 @@ dependencies {
 
 	implementation ("org.mapstruct:mapstruct:1.5.5.Final")
     annotationProcessor ("org.mapstruct:mapstruct-processor:1.5.5.Final")
+    implementation ("org.zalando:logbook-spring-boot-starter:3.6.0")
 
 	implementation("org.apache.thrift:libthrift:0.14.1")
 }

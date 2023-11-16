@@ -9,8 +9,8 @@ import java.util.stream.Collectors;
 
 import com.ArchiDistribuee.VirtualCRM.dto.VirtualLeadDto;
 import com.ArchiDistribuee.VirtualCRM.entity.GeographicPoint;
+import com.ArchiDistribuee.VirtualCRM.entity.InternalLead;
 import com.ArchiDistribuee.VirtualCRM.entity.SalesForceLead;
-import com.ArchiDistribuee.VirtualCRM.entity.InternalLeadDTO;
 import com.ArchiDistribuee.VirtualCRM.entity.VirtualLead;
 import com.ArchiDistribuee.VirtualCRM.exception.InvalidAnnualRevenuesException;
 import com.ArchiDistribuee.VirtualCRM.exception.InvalidDatesException;
@@ -36,7 +36,7 @@ public class VirtualLeadService {
             throw new InvalidAnnualRevenuesException(lowAnnualRevenue, highAnnualRevenue);
         }
 
-        Set<InternalLeadDTO> internalLeads = new HashSet<InternalLeadDTO>();
+        Set<InternalLead> internalLeads = new HashSet<InternalLead>();
         try {
             internalLeads = internalCRMRepository.getLeads(lowAnnualRevenue, highAnnualRevenue);
         } catch (Exception e) {
@@ -52,7 +52,8 @@ public class VirtualLeadService {
 
         ArrayList<VirtualLead> virtualLeads = new ArrayList<VirtualLead>();
         virtualLeads
-                .addAll(internalLeads.stream().map(VirtualLead::fromTypedInternalLeadDTO).collect(Collectors.toList()));
+                .addAll(internalLeads.stream().map(VirtualLeadMapper.INSTANCE::fromInternalLead)
+                        .collect(Collectors.toList()));
         virtualLeads.addAll(salesForceLeads.stream().map(VirtualLead::fromSalesForceLead).collect(Collectors.toList()));
 
         for (VirtualLead virtualLead : virtualLeads) {
@@ -69,18 +70,17 @@ public class VirtualLeadService {
 
         return virtualLeads
                 .stream()
-                .map(VirtualLeadMapper.INSTANCE::virtualLeadToVirtualLeadDto)
+                .map(VirtualLeadMapper.INSTANCE::toVirtualLeadDto)
                 .collect(Collectors.toSet());
     }
 
-    // TODO
     public Set<VirtualLeadDto> getVirtualLeadsByDate(ZonedDateTime startDate, ZonedDateTime endDate) {
 
-      if (endDate.isBefore(startDate)) {
+        if (endDate.isBefore(startDate)) {
             throw new InvalidDatesException(startDate, endDate);
         }
 
-        Set<InternalLeadDTO> internalLeads = new HashSet<InternalLeadDTO>();
+        Set<InternalLead> internalLeads = new HashSet<InternalLead>();
         try {
             internalLeads = internalCRMRepository.getLeadsByDate(startDate, endDate);
         } catch (Exception e) {
@@ -96,7 +96,8 @@ public class VirtualLeadService {
 
         ArrayList<VirtualLead> virtualLeads = new ArrayList<VirtualLead>();
         virtualLeads
-                .addAll(internalLeads.stream().map(VirtualLead::fromTypedInternalLeadDTO).collect(Collectors.toList()));
+                .addAll(internalLeads.stream().map(VirtualLeadMapper.INSTANCE::fromInternalLead)
+                        .collect(Collectors.toList()));
         virtualLeads.addAll(salesForceLeads.stream().map(VirtualLead::fromSalesForceLead).collect(Collectors.toList()));
 
         for (VirtualLead virtualLead : virtualLeads) {
@@ -113,7 +114,7 @@ public class VirtualLeadService {
 
         return virtualLeads
                 .stream()
-                .map(VirtualLeadMapper.INSTANCE::virtualLeadToVirtualLeadDto)
+                .map(VirtualLeadMapper.INSTANCE::toVirtualLeadDto)
                 .collect(Collectors.toSet());
     }
 
