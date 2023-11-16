@@ -9,5 +9,5 @@ import lombok.Setter;
 @Getter
 @Setter
 public class GeographicPoint {
-    private double latitude, longitude;
+    private String latitude, longitude;
 }
