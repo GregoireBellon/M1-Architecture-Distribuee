@@ -18,7 +18,7 @@ struct ThriftInternalLeadDTO {
 
 service LeadService
 {
-        set<ThriftInternalLeadDTO> getLeads(1:double borneInfSalaire, 2:double borneSupSalaire),
+        set<ThriftInternalLeadDTO> getLeads(1:double borneInfSalaire, 2:double borneSupSalaire, 3:string state),
         set<ThriftInternalLeadDTO> getLeadsByDate(1:string borneInfDate, 2:string borneSupDate),
         set<ThriftInternalLeadDTO> getAllLeads(),
         void addLead(1:ThriftInternalLeadDTO lead),
