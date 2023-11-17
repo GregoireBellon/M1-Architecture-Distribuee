@@ -1,16 +1,16 @@
-import { TJSONProtocol, TXHRTransport } from 'thrift';
+import Thrift from 'thrift';
 
-import { LeadServiceClient } from './gen-js/LeadService';
+import { Client } from './gen-nodejs/LeadService';
 
 export class InternalCrmClient {
+  public readonly client: Client;
 
-    private transport: TXHRTransport;
-    private protocol: TJSONProtocol;
-    private service: LeadServiceClient;
+  constructor() {
+    const conn = Thrift.createConnection('localhost', 9090, {
+      transport: Thrift.TBufferedTransport,
+      protocol: Thrift.TBinaryProtocol,
+    });
 
-    constructor() {
-        this.transport = new TXHRTransport('/hello');
-        this.protocol = new TJSONProtocol(this.transport);
-        this.service = new LeadServiceClient(this.protocol);
-    }
+    this.client = Thrift.createClient(Client, conn);
+  }
 }
