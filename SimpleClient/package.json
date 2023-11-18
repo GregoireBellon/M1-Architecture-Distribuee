@@ -6,9 +6,9 @@
   "scripts": {
     "start": "node build/index.js",
     "dev": "DEBUG=1 npm start",
-    "build": "thrift -o src --gen js:node,ts,es6,with_ns ../thrift/src/LeadService.thrift && npx tsc",
+    "build": "thrift -o src --gen js:node,ts ../thrift/src/LeadService.thrift && npx tsc",
     "bunrun": "bun run src/index.ts",
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "test": "jest",
     "lint": "eslint . --ext .ts"
   },
   "keywords": [],
@@ -34,6 +34,7 @@
     "eslint-plugin-prettier": "5.0.1",
     "eslint-plugin-security": "1.7.1",
     "prettier": "3.0.3",
+    "ts-jest": "^29.1.1",
     "typescript": "5.2.2"
   }
 }

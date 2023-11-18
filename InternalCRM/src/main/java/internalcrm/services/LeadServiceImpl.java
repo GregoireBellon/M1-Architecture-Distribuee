@@ -10,6 +10,7 @@ import org.mapstruct.factory.Mappers;
 import internalcrm.mappers.LeadMapper;
 import internalcrm.repositories.LeadRepository;
 import internalcrm.services.thrift.impl.ThriftInternalLeadDTO;
+import internalcrm.services.thrift.impl.LeadService.AsyncProcessor.addLead;
 import internalcrm.services.thrift.impl.LeadService;
 
 public class LeadServiceImpl implements LeadService.Iface {
@@ -62,6 +63,11 @@ public class LeadServiceImpl implements LeadService.Iface {
     @Override
     public Set<ThriftInternalLeadDTO> getAllLeads() throws TException {
         return leadMapper.toInternalLeadDto(leadRepository.findAll());
+    }
+
+    @Override
+    public void addAllLeads(Set<ThriftInternalLeadDTO> leads) throws TException {
+        leadMapper.toInternalLead(leads).forEach(leadRepository::addLead);
     }
 
 }
