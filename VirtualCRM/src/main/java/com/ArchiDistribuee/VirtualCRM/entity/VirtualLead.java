@@ -41,20 +41,20 @@ public class VirtualLead {
                 internalLead.state());
     }
     public static VirtualLead fromSalesForceLead(SalesForceLead salesForceLead) {
-        Double annualRevenue = salesForceLead.annualRevenue() != null ? salesForceLead.annualRevenue() : 0.0;;
+        Double annualRevenue = salesForceLead.getAnnualRevenue() != null ? salesForceLead.getAnnualRevenue() : 0.0;;
 
-        return new VirtualLead(salesForceLead.firstName(),
-                salesForceLead.lastName(),
+        return new VirtualLead(salesForceLead.getFirstName(),
+                salesForceLead.getLastName(),
                 annualRevenue,
-                salesForceLead.phone(),
-                salesForceLead.street(),
-                salesForceLead.postalCode(),
-                salesForceLead.city(),
-                salesForceLead.country(),
-                salesForceLead.creationDate(),
+                salesForceLead.getPhone(),
+                salesForceLead.getStreet(),
+                salesForceLead.getPostalCode(),
+                salesForceLead.getCity(),
+                salesForceLead.getCountry(),
+                salesForceLead.getCreationDate(),
                 null,
-                salesForceLead.company(),
-                salesForceLead.state()
+                salesForceLead.getCompany(),
+                salesForceLead.getState()
                 );    
             }
     // TODO
