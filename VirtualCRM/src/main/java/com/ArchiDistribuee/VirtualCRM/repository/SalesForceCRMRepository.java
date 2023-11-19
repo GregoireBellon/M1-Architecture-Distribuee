@@ -1,5 +1,6 @@
 package com.ArchiDistribuee.VirtualCRM.repository;
 
+import java.time.ZonedDateTime;
 import java.util.Calendar;
 import java.util.HashSet;
 import java.util.List;
@@ -49,7 +50,7 @@ public class SalesForceCRMRepository {
     }
  
     // TODO
-    public Set<SalesForceLead> getLeadsByDate(Calendar startDate, Calendar endDate) {
+    public Set<SalesForceLead> getLeadsByDate(ZonedDateTime startDate, ZonedDateTime endDate) {
         String query = "SELECT FirstName, LastName, AnnualRevenue, Phone, Street, City, State, Company ,CreatedDate , PostalCode  FROM Lead "
                 +
                 "WHERE CreatedDate  > " + "2023-12-31T00:00:00Z" +

@@ -57,21 +57,6 @@ public class VirtualLead {
                 salesForceLead.getState()
                 );    
             }
-    // TODO
-    // public static VirtualLead fromSalesForceLead(SalesForceLead salesForceLead) {
-    //     return new VirtualLead(salesForceLead.getFirstName(),
-    //             salesForceLead.getLastName(),
-    //             salesForceLead.getAnnualRevenue(),
-    //             salesForceLead.getPhone(),
-    //             salesForceLead.getStreet(),
-    //             salesForceLead.getPostalCode(),
-    //             salesForceLead.getCity(),
-    //             salesForceLead.getCountry(),
-    //             salesForceLead.getCreationDate(),
-    //             null,
-    //             salesForceLead.getCompany(),
-    //             salesForceLead.getState()
-    //             );    
-    //         }
+
 
 }
