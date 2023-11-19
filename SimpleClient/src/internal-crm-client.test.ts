@@ -7,17 +7,18 @@ import { Lead } from './lead';
 test('Should get data from InternalCRM', async () => {
   const internalCrmClient = new InternalCrmClient();
   const leads = await internalCrmClient.getAllLeads();
-  expect(leads.size).not.toBe(0);
+  expect(leads.length).not.toBe(0);
 });
 
 test('Should merge leads to InternalCRM Successfully', async () => {
   const internalCrmClient = new InternalCrmClient();
 
-  const leadsToAdd: Set<Lead> = new Set();
+  const leadsToAdd: Lead[] = [];
 
   for (let i = 0; i < 10; i++) {
-    leadsToAdd.add({
-      id: `NEW_${i}_${DateTime.now().toISO}`,
+    leadsToAdd.push({
+      // cet identifiant sert à rendree chaque objet du set différent du précédent, ils seront override par le back de toutes façons
+      id: `${i}`,
       firstName: 'Jean',
       lastName: 'Pierre',
       annualRevenue: 23,
@@ -35,11 +36,11 @@ test('Should merge leads to InternalCRM Successfully', async () => {
       },
     });
   }
-  const initialDbSize = (await internalCrmClient.getAllLeads()).size;
+  const initialDbSize = (await internalCrmClient.getAllLeads()).length;
 
   await internalCrmClient.mergeLeads(leadsToAdd);
 
   const updatedLeads = await internalCrmClient.getAllLeads();
 
-  expect(updatedLeads.size).toEqual(initialDbSize + leadsToAdd.size);
+  expect(updatedLeads.length).toEqual(initialDbSize + leadsToAdd.length);
 });

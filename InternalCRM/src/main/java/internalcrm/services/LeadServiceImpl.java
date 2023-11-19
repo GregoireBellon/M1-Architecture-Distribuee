@@ -2,15 +2,16 @@ package internalcrm.services;
 
 import java.time.ZonedDateTime;
 import java.util.Set;
+import java.util.UUID;
 import java.util.stream.Collectors;
 
 import org.apache.thrift.TException;
 import org.mapstruct.factory.Mappers;
 
 import internalcrm.mappers.LeadMapper;
+import internalcrm.models.InternalLead;
 import internalcrm.repositories.LeadRepository;
 import internalcrm.services.thrift.impl.ThriftInternalLeadDTO;
-import internalcrm.services.thrift.impl.LeadService.AsyncProcessor.addLead;
 import internalcrm.services.thrift.impl.LeadService;
 
 public class LeadServiceImpl implements LeadService.Iface {
@@ -52,7 +53,12 @@ public class LeadServiceImpl implements LeadService.Iface {
 
     @Override
     public void addLead(ThriftInternalLeadDTO lead) throws TException {
-        leadRepository.addLead(leadMapper.toInternalLead(lead));
+
+        InternalLead internal = leadMapper.toInternalLead(lead);
+
+        internal.setId(UUID.randomUUID().toString());
+
+        leadRepository.addLead(internal);
     }
 
     @Override
@@ -66,8 +72,12 @@ public class LeadServiceImpl implements LeadService.Iface {
     }
 
     @Override
-    public void addAllLeads(Set<ThriftInternalLeadDTO> leads) throws TException {
-        leadMapper.toInternalLead(leads).forEach(leadRepository::addLead);
-    }
+    public void addLeads(Set<ThriftInternalLeadDTO> leads) throws TException {
 
+        for (ThriftInternalLeadDTO thriftInternalLeadDTO : leads) {
+            this.addLead(thriftInternalLeadDTO);
+        }
+
+    }
+    
 }

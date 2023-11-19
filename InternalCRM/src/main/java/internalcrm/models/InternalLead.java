@@ -25,4 +25,15 @@ public class InternalLead {
     private ZonedDateTime creationDate;
     private String company;
     private String state;
+
+    @Override
+    public boolean equals(Object obj) {
+        if(obj == this){
+            return true;
+        }
+        if(obj instanceof InternalLead i){
+            return i.getId() == this.getId();
+        }
+        return false;
+    }
 }

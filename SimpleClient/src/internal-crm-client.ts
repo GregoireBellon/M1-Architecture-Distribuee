@@ -19,15 +19,13 @@ export class InternalCrmClient {
     return ret;
   }
 
-  getAllLeads(): Promise<Set<ThriftInternalLeadDTO>> {
-    return this.connectionWrapper(client => client.getAllLeads())
-      .then(promisedLeads => promisedLeads)
-      .then(leads => new Set(leads));
+  getAllLeads(): Promise<ThriftInternalLeadDTO[]> {
+    return this.connectionWrapper(client => client.getAllLeads()).then(promisedLeads => promisedLeads);
   }
 
-  mergeLeads(leads: Set<Lead>): Promise<void> {
-    const mappedLeads = [...leads].map(toThriftInternalLeadDto);
+  mergeLeads(leads: Lead[]): Promise<void> {
+    const mappedLeads = leads.map(toThriftInternalLeadDto);
 
-    return this.connectionWrapper(client => client.addAllLeads(mappedLeads));
+    return this.connectionWrapper(client => client.addLeads(mappedLeads));
   }
 }
