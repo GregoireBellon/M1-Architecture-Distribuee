@@ -40,10 +40,38 @@ public class VirtualLead {
                 internalLead.company(),
                 internalLead.state());
     }
-
-    // TODO
     public static VirtualLead fromSalesForceLead(SalesForceLead salesForceLead) {
-        return new VirtualLead(null, null, 0, null, null, null, null, null, null, null, null, null);
-    }
+        Double annualRevenue = salesForceLead.annualRevenue() != null ? salesForceLead.annualRevenue() : 0.0;;
+
+        return new VirtualLead(salesForceLead.firstName(),
+                salesForceLead.lastName(),
+                annualRevenue,
+                salesForceLead.phone(),
+                salesForceLead.street(),
+                salesForceLead.postalCode(),
+                salesForceLead.city(),
+                salesForceLead.country(),
+                salesForceLead.creationDate(),
+                null,
+                salesForceLead.company(),
+                salesForceLead.state()
+                );    
+            }
+    // TODO
+    // public static VirtualLead fromSalesForceLead(SalesForceLead salesForceLead) {
+    //     return new VirtualLead(salesForceLead.getFirstName(),
+    //             salesForceLead.getLastName(),
+    //             salesForceLead.getAnnualRevenue(),
+    //             salesForceLead.getPhone(),
+    //             salesForceLead.getStreet(),
+    //             salesForceLead.getPostalCode(),
+    //             salesForceLead.getCity(),
+    //             salesForceLead.getCountry(),
+    //             salesForceLead.getCreationDate(),
+    //             null,
+    //             salesForceLead.getCompany(),
+    //             salesForceLead.getState()
+    //             );    
+    //         }
 
 }

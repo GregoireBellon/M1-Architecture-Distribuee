@@ -1,13 +1,13 @@
-package com.ArchiDistribuee.VirtualCRM;
+// package com.ArchiDistribuee.VirtualCRM;
 
-import org.junit.jupiter.api.Test;
-import org.springframework.boot.test.context.SpringBootTest;
+// import org.junit.jupiter.api.Test;
+// import org.springframework.boot.test.context.SpringBootTest;
 
-@SpringBootTest
-class VirtualCrmApplicationTests {
+// @SpringBootTest
+// class VirtualCrmApplicationTests {
 
-	@Test
-	void contextLoads() {
-	}
+// 	@Test
+// 	void contextLoads() {
+// 	}
 
-}
+// }

@@ -117,5 +117,5 @@ public class VirtualLeadService {
                 .map(VirtualLeadMapper.INSTANCE::toVirtualLeadDto)
                 .collect(Collectors.toSet());
     }
-
+        
 }
