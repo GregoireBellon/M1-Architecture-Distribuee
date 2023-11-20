@@ -27,7 +27,7 @@ public class SalesForceLead {
         private String city;
         private String postalCode;
         private String country;
-        private  ZonedDateTime creationDate;
+        private  ZonedDateTime createdDate;
         private String company;
         private String state;
 

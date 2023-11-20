@@ -51,7 +51,7 @@ public class VirtualLead {
                 salesForceLead.getPostalCode(),
                 salesForceLead.getCity(),
                 salesForceLead.getCountry(),
-                salesForceLead.getCreationDate(),
+                salesForceLead.getCreatedDate(),
                 null,
                 salesForceLead.getCompany(),
                 salesForceLead.getState()
