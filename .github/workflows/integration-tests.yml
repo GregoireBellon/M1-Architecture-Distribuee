@@ -11,7 +11,7 @@ permissions:
 
 jobs:
   simple_client:
-
+    name: "Tests d'intégration de Simple Client"
     runs-on: ubuntu-latest
 
     steps:
