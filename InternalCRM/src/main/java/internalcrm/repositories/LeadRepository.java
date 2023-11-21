@@ -5,6 +5,7 @@ import java.time.ZonedDateTime;
 import java.util.HashSet;
 import java.util.Locale;
 import java.util.Set;
+import java.util.UUID;
 import java.util.concurrent.TimeUnit;
 import java.util.stream.Collectors;
 
@@ -22,7 +23,7 @@ public class LeadRepository {
     static {
         for (int i = 0; i < 1000; i++) {
             leadDTOs.add(
-                    new InternalLead("INTERN_" + i,
+                    new InternalLead(UUID.randomUUID().toString(),
                             faker.name().lastName() + ", " + faker.name().firstName(),
                             faker.number().randomDouble(2, 25, 125),
                             faker.phoneNumber().cellPhone(),

@@ -6,9 +6,9 @@
   "scripts": {
     "start": "node build/index.js",
     "dev": "DEBUG=1 npm start",
-    "build": "npx tsc",
+    "build": "thrift -o src --gen js:node,ts ../thrift/src/LeadService.thrift && npx tsc",
     "bunrun": "bun run src/index.ts",
-    "test": "echo \"It's all good, nothing to do !\" && exit 0",
+    "test": "jest",
     "lint": "eslint . --ext .ts"
   },
   "keywords": [],
@@ -18,12 +18,14 @@
     "axios": "1.6.1",
     "commander": "11.1.0",
     "figlet": "1.6.0",
-    "luxon": "3.4.3"
+    "luxon": "3.4.3",
+    "thrift": "0.19.0"
   },
   "devDependencies": {
     "@types/figlet": "1.5.8",
     "@types/luxon": "3.3.4",
     "@types/node": "20.8.5",
+    "@types/thrift": "0.10.17",
     "@typescript-eslint/eslint-plugin": "6.10.0",
     "@typescript-eslint/parser": "6.10.0",
     "eslint": "8.53.0",
@@ -32,6 +34,7 @@
     "eslint-plugin-prettier": "5.0.1",
     "eslint-plugin-security": "1.7.1",
     "prettier": "3.0.3",
+    "ts-jest": "29.1.1",
     "typescript": "5.2.2"
   }
 }
