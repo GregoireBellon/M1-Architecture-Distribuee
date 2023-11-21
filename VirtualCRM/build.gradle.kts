@@ -4,7 +4,6 @@ plugins {
 	id("io.spring.dependency-management") version "1.1.3"
 	id("io.freefair.lombok") version "8.4"
 
-	id("com.google.osdetector") version "1.7.3"
 	id("com.linecorp.thrift-gradle-plugin") version "+"
 }
 
@@ -14,6 +13,7 @@ version = "0.0.1-SNAPSHOT"
 java {
 	sourceCompatibility = JavaVersion.VERSION_17
 }
+
 
 repositories {
 	mavenCentral()
@@ -38,11 +38,17 @@ dependencies {
 
 testing {
 	suites {
-		val integrationTest by registering(JvmTestSuite::class){
-			dependencies{
-				implementation(project())
-			}
-		}
+		        
+		val integrationTest by registering(JvmTestSuite::class) { 
+			dependencies {
+				implementation("org.springframework.boot:spring-boot-starter")
+				implementation("org.springframework.boot:spring-boot-starter-web")
+				implementation("org.springframework.boot:spring-boot-starter-webflux")
+				implementation("org.springframework.boot:spring-boot-starter-test")
+
+				implementation(project()) 
+            }	
+		}	
 	}
 }
 

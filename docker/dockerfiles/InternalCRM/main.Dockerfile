@@ -7,4 +7,4 @@ RUN apk add thrift
 COPY ./thrift /app/thrift
 COPY ./InternalCRM /app/InternalCRM
 
-RUN gradle assemble
+RUN gradle clean assemble
