@@ -1,4 +1,4 @@
-name: Integration tests with gradle
+name: Integration tests with Docker
 
 on:
   push:
