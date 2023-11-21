@@ -1,0 +1,20 @@
+name: Integration tests with gradle
+
+on:
+  push:
+    branches: [ "master", "dev", "feat/CI/integration-test"]
+  pull_request:
+    branches: [ "master", "dev" ]
+
+permissions:
+  contents: read
+
+jobs:
+  simple_client:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v3
+    - name: Lancer le docker compose
+      run:  docker-compose -f docker/integration/SimpleClient/docker-compose.yml up --abort-on-container-exit --exit-code-from client
