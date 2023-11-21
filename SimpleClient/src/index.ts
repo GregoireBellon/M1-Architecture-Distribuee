@@ -37,31 +37,31 @@ function parseSalary(salary: string): number {
   }
 }
 
-async function inputLeadsByDate(startDate: DateTime, endDate: DateTime): Promise<Array<Lead>> {
+async function inputLeadsByDate(startDate: DateTime, endDate: DateTime): Promise<Lead[]> {
   try {
-    const { data } = await httpClient.get('/leads/byDate', {
+    const { data } = await httpClient.get<Lead[]>('/leads/byDate', {
       params: { startDate: startDate.toISO(), endDate: endDate.toISO() },
     });
-    return data as Lead[];
+    return data;
   } catch (e) {
     logger.debug((e as Error).message);
     throw new Error('Impossible de récupérer les données');
   }
 }
 
-async function inputLeadsBySalary(minSalary: number, maxSalary: number, state: string): Promise<Array<Lead>> {
+async function inputLeadsBySalary(minSalary: number, maxSalary: number, state: string): Promise<Lead[]> {
   try {
-    const { data } = await httpClient.get('/leads', {
+    const { data } = await httpClient.get<Lead[]>('/leads', {
       params: { lowAnnualRevenue: minSalary, highAnnualRevenue: maxSalary, state },
     });
-    return data as Lead[];
+    return data;
   } catch (e) {
     logger.debug((e as Error).message);
     throw new Error('Impossible de récupérer les données');
   }
 }
 
-function display(leads: Array<Lead>) {
+function display(leads: Lead[]) {
   console.log(`${leads.length} leads :`);
   console.table(leads);
 }
