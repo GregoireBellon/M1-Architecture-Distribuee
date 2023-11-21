@@ -1,0 +1,22 @@
+
+services:
+  client:
+    depends_on:
+      - internal
+    build: 
+      context: ../../../
+      dockerfile: docker/dockerfiles/SimpleClient/main.Dockerfile
+
+    command: sh -c "sleep 15 && npm run test"
+
+    environment:
+      - THRIFT_HOST=internal
+      - THRIFT_PORT=9090
+
+  internal:
+    build: 
+      context: ../../../
+      dockerfile: docker/dockerfiles/InternalCRM/main.Dockerfile
+    
+    command: gradle run
+
