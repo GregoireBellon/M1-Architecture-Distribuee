@@ -18,13 +18,17 @@ jobs:
         uses: docker/login-action@v3
         with:
           registry: ghcr.io/${{ github.repository_owner }}
-          username: ${{ github.repository_owner }}
+          username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
+      - name: set lower case owner name
+        run: echo "OWNER_LC=${OWNER,,}" >>${GITHUB_ENV}
+        env:
+          OWNER: "${{ github.repository_owner }}"
       - name: build-push
         uses: docker/build-push-action@v5
         with:
           context: ./thrift
-          tags: ghcr.io/${{ github.repository_owner }}/thrift:${{ github.ref_name }}
+          tags: ghcr.io/${{ env.OWNER_LC }}/thrift:${{ github.ref_name }}
           push: true
           file: ./docker/dockerfiles/Thrift/Dockerfile
 
