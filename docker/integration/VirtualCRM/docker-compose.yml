@@ -1,22 +1,15 @@
+version: "3"
 
 services:
   virtual:
     depends_on:
       - internal
-    build: 
-      context: ../../../
-      dockerfile: docker/dockerfiles/VirtualCRM/main.Dockerfile
-
-    command: sh -c "gradle test integrationTest"
-
+    image: ghcr.io/$REGISTRY_NAME/virtual:$BRANCH
+    command: sh -c "gradle integrationTest -x compileThrift"
     environment:
       - INTERNAL_CRM_URL=internal
       - INTERNAL_CRM_POST=9090
 
   internal:
-    build: 
-      context: ../../../
-      dockerfile: docker/dockerfiles/InternalCRM/main.Dockerfile
-    
+    image: ghcr.io/$REGISTRY_NAME/internal:$BRANCH
     command: gradle run
-
