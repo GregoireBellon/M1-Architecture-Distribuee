@@ -1,8 +1,15 @@
 {
-  "name": "simpleclient",
+  "name": "@gregoirebellon/simpleclient",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/GregoireBellon/M1-Architecture-Distribuee.git"
+  },
+  "publishConfig": {
+    "registry": "https://npm.pkg.github.com"
+  },
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
+  "main": "build/index.js",
   "scripts": {
     "start": "node build/index.js",
     "dev": "DEBUG=1 npm start",
