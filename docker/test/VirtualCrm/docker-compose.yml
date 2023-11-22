@@ -2,6 +2,6 @@ version: "3"
 
 services:
   internal:
-    image: ghcr.io/$REGISTRY_NAME/internal:$BRANCH
+    image: ghcr.io/${REGISTRY_NAME}/internal:${BRANCH}
     working_dir: /app
     command: gradle test -x compileThrift
