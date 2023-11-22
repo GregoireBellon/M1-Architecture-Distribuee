@@ -1,22 +1,14 @@
-
 services:
   client:
     depends_on:
       - internal
-    build: 
-      context: ../../../
-      dockerfile: docker/dockerfiles/SimpleClient/main.Dockerfile
-
-    command: sh -c "sleep 15 && npm run test"
+    image: ghcr.io/$REGISTRY_NAME/client:$BRANCH
+    command: sh -c "sleep 15 && npm run test:integration"
 
     environment:
       - THRIFT_HOST=internal
       - THRIFT_PORT=9090
 
   internal:
-    build: 
-      context: ../../../
-      dockerfile: docker/dockerfiles/InternalCRM/main.Dockerfile
-    
+    image: ghcr.io/$REGISTRY_NAME/internal:$BRANCH
     command: gradle run
-

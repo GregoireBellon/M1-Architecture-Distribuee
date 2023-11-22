@@ -8,7 +8,7 @@
     "dev": "DEBUG=1 npm start",
     "build": "thrift -o src --gen js:node,ts ../thrift/src/LeadService.thrift && npx tsc",
     "bunrun": "bun run src/index.ts",
-    "test": "jest",
+    "test:integration": "jest",
     "lint": "eslint . --ext .ts",
     "build:nothrift": "npx tsc"
   },
