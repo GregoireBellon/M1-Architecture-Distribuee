@@ -17,14 +17,14 @@ jobs:
       - name: Login to Docker Hub
         uses: docker/login-action@v3
         with:
-          registry: ghcr.io/${{ github.actor }}
-          username: ${{ github.actor }}
+          registry: ghcr.io/${{ github.repository_owner }}
+          username: ${{ github.repository_owner }}
           password: ${{ secrets.GITHUB_TOKEN }}
       - name: build-push
         uses: docker/build-push-action@v5
         with:
           context: ./thrift
-          tags: ghcr.io/${{ github.actor }}/thrift:${{ github.ref_name }}
+          tags: ghcr.io/${{ github.repository_owner }}/thrift:${{ github.ref_name }}
           push: true
           file: ./docker/dockerfiles/Thrift/Dockerfile
 
