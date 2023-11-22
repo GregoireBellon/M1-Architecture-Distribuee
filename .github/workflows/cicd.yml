@@ -35,6 +35,8 @@ jobs:
           tags: ghcr.io/${{ env.REGISTRY_NAME }}/thrift:${{ github.ref_name }}
           push: true
           file: ./docker/dockerfiles/Thrift/Dockerfile
+          cache-from: type=gha
+          cache-to: type=gha,mode=max
 
   build-internal-crm:
     permissions:
@@ -42,8 +44,6 @@ jobs:
     runs-on: ubuntu-latest
     needs: build-thrift
     steps:
-      - name: Checkout
-        uses: actions/checkout@v3
       - name: Checkout
         uses: actions/checkout@v3
       - name: Set up Docker Buildx
@@ -63,6 +63,8 @@ jobs:
           file: ./docker/dockerfiles/InternalCRM/Dockerfile
           build-args: |
             BRANCH=${{ github.ref_name }}
+          cache-from: type=gha
+          cache-to: type=gha,mode=max
 
   build-virtual-crm:
     permissions:
@@ -70,8 +72,6 @@ jobs:
     runs-on: ubuntu-latest
     needs: build-thrift
     steps:
-      - name: Checkout
-        uses: actions/checkout@v3
       - name: Checkout
         uses: actions/checkout@v3
       - name: Set up Docker Buildx
@@ -91,3 +91,32 @@ jobs:
           file: ./docker/dockerfiles/VirtualCRM/Dockerfile
           build-args: |
             BRANCH=${{ github.ref_name }}
+          cache-from: type=gha
+          cache-to: type=gha,mode=max
+  build-client:
+    permissions:
+      packages: write
+    runs-on: ubuntu-latest
+    needs: build-thrift
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+      - name: Login to Docker Hub
+        uses: docker/login-action@v3
+        with:
+          registry: ghcr.io/${{ github.repository_owner }}
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+      - name: Build and push image
+        uses: docker/build-push-action@v5
+        with:
+          context: ./SimpleClient
+          tags: ghcr.io/${{ env.REGISTRY_NAME }}/client:${{ github.ref_name }}
+          push: true
+          file: ./docker/dockerfiles/SimpleClient/Dockerfile
+          build-args: |
+            BRANCH=${{ github.ref_name }}
+          cache-from: type=gha
+          cache-to: type=gha,mode=max

@@ -9,7 +9,8 @@
     "build": "thrift -o src --gen js:node,ts ../thrift/src/LeadService.thrift && npx tsc",
     "bunrun": "bun run src/index.ts",
     "test": "jest",
-    "lint": "eslint . --ext .ts"
+    "lint": "eslint . --ext .ts",
+    "build:nothrift": "npx tsc"
   },
   "keywords": [],
   "author": "",
