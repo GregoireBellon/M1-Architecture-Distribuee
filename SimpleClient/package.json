@@ -7,9 +7,10 @@
   "publishConfig": {
     "registry": "https://npm.pkg.github.com"
   },
-  "version": "1.0.0",
+  "version": "1.0.2",
   "description": "",
   "main": "build/index.js",
+  "bin": "script/app.js",
   "scripts": {
     "start": "node build/index.js",
     "dev": "DEBUG=1 npm start",
