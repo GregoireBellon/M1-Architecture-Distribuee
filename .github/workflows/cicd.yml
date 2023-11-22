@@ -277,6 +277,6 @@ jobs:
           node-version: "20.10.0"
           registry-url: "https://npm.pkg.github.com"
           scope: "@gregoirebellon"
-      - run: npm publish
+      - run: npm publish --prefix /app
         env:
           NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
