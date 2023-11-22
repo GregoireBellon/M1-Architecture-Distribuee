@@ -26,7 +26,7 @@ jobs:
           context: ./thrift
           tags: ghcr.io/${{ github.actor }}/thrift:${{ github.ref_name }}
           push: true
-          file: ./docker/dockerfiles/Thrift
+          file: ./docker/dockerfiles/Thrift/Dockerfile
 
   # build:
   #   name: "build"
