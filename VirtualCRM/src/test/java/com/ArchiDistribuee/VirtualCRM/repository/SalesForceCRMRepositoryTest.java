@@ -3,6 +3,7 @@ package com.ArchiDistribuee.VirtualCRM.repository;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
+import java.time.ZoneId;
 import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Set;
@@ -40,14 +41,15 @@ public class SalesForceCRMRepositoryTest {
 
       @Test
     void whenGetSalesForceLeadByDateShouldReturnValid() {
-        DateTimeFormatter format = DateTimeFormatter.ISO_DATE_TIME;
 
-        ZonedDateTime start = ZonedDateTime.parse("2022-01-01T00:00:00.000Z", format);
-        ZonedDateTime end = ZonedDateTime.parse("2023-12-01T00:00:00.000Z", format);
+    ZoneId _zoneId = ZoneId.of("UTC");
 
-        Set<SalesForceLead> result = salesForceCRMRepository.getLeadsByDate(start, end);
-        
-        assertFalse(result.isEmpty());
+    ZonedDateTime start = ZonedDateTime.now(_zoneId).minusYears(10);
+    ZonedDateTime end = ZonedDateTime.now(_zoneId);
+
+    Set<SalesForceLead> result = salesForceCRMRepository.getLeadsByDate(start, end);
+    
+    assertFalse(result.isEmpty());
 
         SalesForceLead firstLead = result.iterator().next();
 
