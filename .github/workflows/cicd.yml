@@ -65,8 +65,8 @@ jobs:
           file: ./docker/dockerfiles/InternalCRM/Dockerfile
           build-args: |
             BRANCH=${{ github.ref_name }}
-            cache-from: type=registry,ref=ghcr.io/${{ env.REGISTRY_NAME }}/internal-cache:${{ github.ref_name }}
-            cache-to: type=registry,ref=ghcr.io/${{ env.REGISTRY_NAME }}/internal-cache:${{ github.ref_name }},mode=max
+          cache-from: type=registry,ref=ghcr.io/${{ env.REGISTRY_NAME }}/internal-cache:${{ github.ref_name }}
+          cache-to: type=registry,ref=ghcr.io/${{ env.REGISTRY_NAME }}/internal-cache:${{ github.ref_name }},mode=max
 
   build-virtual:
     permissions:
@@ -235,8 +235,8 @@ jobs:
           file: ./docker/dockerfiles/InternalCRM/prod.Dockerfile
           build-args: |
             BRANCH=${{ github.ref_name }}
-            cache-from: type=registry,ref=ghcr.io/${{ env.REGISTRY_NAME }}/internal-prod-cache:${{ github.ref_name }}
-            cache-to: type=registry,ref=ghcr.io/${{ env.REGISTRY_NAME }}/internal-prod-cache:${{ github.ref_name }},mode=max
+          cache-from: type=registry,ref=ghcr.io/${{ env.REGISTRY_NAME }}/internal-prod-cache:${{ github.ref_name }}
+          cache-to: type=registry,ref=ghcr.io/${{ env.REGISTRY_NAME }}/internal-prod-cache:${{ github.ref_name }},mode=max
 
   build-prod-virtual:
     permissions:
