@@ -21,9 +21,9 @@ public interface VirtualLeadMapper {
     @Mapping(target = "geographicPoint", ignore = true)
     VirtualLead fromInternalLead(InternalLead internalLead);
     
+    @Mapping(target = "geographicPoint", ignore = true)
     @Mapping(source = "createdDate", target = "creationDate")
     VirtualLead fromSalesForceLead(SalesForceLead lead);
 
     Set<VirtualLead> fromSalesForceLead(Set<SalesForceLead> lead);
-
 }
