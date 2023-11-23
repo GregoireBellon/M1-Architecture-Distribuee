@@ -33,6 +33,7 @@ jobs:
         with:
           context: ./thrift
           tags: ghcr.io/${{ env.REGISTRY_NAME }}/thrift:${{ github.ref_name }}
+          pull: true
           push: true
           file: ./docker/dockerfiles/Thrift/Dockerfile
           cache-from: type=gha
@@ -59,6 +60,7 @@ jobs:
         with:
           context: ./InternalCRM
           tags: ghcr.io/${{ env.REGISTRY_NAME }}/internal:${{ github.ref_name }}
+          pull: true
           push: true
           file: ./docker/dockerfiles/InternalCRM/Dockerfile
           build-args: |
@@ -87,6 +89,7 @@ jobs:
         with:
           context: ./VirtualCRM
           tags: ghcr.io/${{ env.REGISTRY_NAME }}/virtual:${{ github.ref_name }}
+          pull: true
           push: true
           file: ./docker/dockerfiles/VirtualCRM/Dockerfile
           build-args: |
@@ -114,6 +117,7 @@ jobs:
         with:
           context: ./SimpleClient
           tags: ghcr.io/${{ env.REGISTRY_NAME }}/client:${{ github.ref_name }}
+          pull: true
           push: true
           file: ./docker/dockerfiles/SimpleClient/Dockerfile
           build-args: |
@@ -226,6 +230,7 @@ jobs:
         with:
           context: ./docker/dockerfiles/InternalCRM/
           tags: ghcr.io/${{ env.REGISTRY_NAME }}/internal-prod:${{ github.ref_name }}
+          pull: true
           push: true
           file: ./docker/dockerfiles/InternalCRM/prod.Dockerfile
           build-args: |
@@ -254,6 +259,7 @@ jobs:
         with:
           context: ./docker/dockerfiles/VirtualCRM
           tags: ghcr.io/${{ env.REGISTRY_NAME }}/virtual-prod:${{ github.ref_name }}
+          pull: true
           push: true
           file: ./docker/dockerfiles/VirtualCRM/prod.Dockerfile
           build-args: |
