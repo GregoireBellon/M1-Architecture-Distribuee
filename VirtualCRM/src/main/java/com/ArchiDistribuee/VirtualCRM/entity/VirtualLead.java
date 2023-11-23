@@ -2,13 +2,14 @@ package com.ArchiDistribuee.VirtualCRM.entity;
 
 import java.time.ZonedDateTime;
 
-import com.ArchiDistribuee.VirtualCRM.dto.InternalLeadDTO;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @AllArgsConstructor
+@NoArgsConstructor
 @Getter
 @Setter
 public class VirtualLead {
@@ -24,39 +25,5 @@ public class VirtualLead {
     private GeographicPoint geographicPoint;
     private String company;
     private String state;
-
-    public static VirtualLead fromTypedInternalLeadDTO(InternalLeadDTO internalLead) {
-        return new VirtualLead(
-                internalLead.firstName(),
-                internalLead.lastName(),
-                internalLead.annualRevenue(),
-                internalLead.phone(),
-                internalLead.street(),
-                internalLead.postalCode(),
-                internalLead.city(),
-                internalLead.country(),
-                internalLead.creationDate(),
-                null,
-                internalLead.company(),
-                internalLead.state());
-    }
-    public static VirtualLead fromSalesForceLead(SalesForceLead salesForceLead) {
-        Double annualRevenue = salesForceLead.getAnnualRevenue() != null ? salesForceLead.getAnnualRevenue() : 0.0;;
-
-        return new VirtualLead(salesForceLead.getFirstName(),
-                salesForceLead.getLastName(),
-                annualRevenue,
-                salesForceLead.getPhone(),
-                salesForceLead.getStreet(),
-                salesForceLead.getPostalCode(),
-                salesForceLead.getCity(),
-                salesForceLead.getCountry(),
-                salesForceLead.getCreatedDate(),
-                null,
-                salesForceLead.getCompany(),
-                salesForceLead.getState()
-                );    
-            }
-
 
 }
