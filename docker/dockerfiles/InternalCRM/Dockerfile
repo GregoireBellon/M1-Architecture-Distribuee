@@ -9,5 +9,5 @@ WORKDIR /app
 COPY --from=thrift /app/gen-java/internalcrm ./src/main/java/internalcrm
 COPY . .
 
-RUN --mount=type=cache,target=/root/.gradle gradle --no-daemon assemble -x compileThrift
+RUN --mount=type=cache,target=/root/.gradle gradle --no-daemon build testClasses -x test -x compileThrift
 
