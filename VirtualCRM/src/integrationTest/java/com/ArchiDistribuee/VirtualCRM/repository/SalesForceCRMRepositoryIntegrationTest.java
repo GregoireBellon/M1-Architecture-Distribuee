@@ -1,5 +1,6 @@
 package com.ArchiDistribuee.VirtualCRM.repository;
 
+
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
@@ -14,7 +15,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import com.ArchiDistribuee.VirtualCRM.entity.SalesForceLead;
 
 @SpringBootTest
-public class SalesForceCRMRepositoryTest {
+public class SalesForceCRMRepositoryIntegrationTest {
 
     @Autowired
     private SalesForceCRMRepository salesForceCRMRepository;
