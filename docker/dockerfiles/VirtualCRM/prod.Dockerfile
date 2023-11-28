@@ -11,10 +11,11 @@ USER appuser
 
 COPY --from=base --chown=appuser:appgroup /app/build/libs/VirtualCRM-0.0.1-SNAPSHOT.jar app.jar
 
-ARG PORT=8090
+ARG PORT=8080
 ENV PORT=$PORT
 
 ARG INTERNAL_CRM_HOST=internal
 ENV INTERNAL_CRM_HOST=$INTERNAL_CRM_HOST
 
+EXPOSE $PORT
 CMD ["sh", "-c", "java -Dserver.port=$PORT -Dspring.datasource.internalCRM.url=$INTERNAL_CRM_HOST  -jar app.jar" ]
