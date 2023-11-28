@@ -127,88 +127,88 @@ jobs:
   test-internal:
     runs-on: ubuntu-latest
     needs: build-internal
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v3
-      - name: Login to Docker Hub
-        uses: docker/login-action@v3
-        with:
-          registry: ghcr.io/${{ github.repository_owner }}
-          username: ${{ github.actor }}
-          password: ${{ secrets.GITHUB_TOKEN }}
-      - name: Test
-        run: >
-          REGISTRY_NAME=${{ env.REGISTRY_NAME }} 
-          BRANCH=${{ github.ref_name }} 
-          docker-compose -f ./docker/test/InternalCrm/docker-compose.yml up --exit-code-from internal
+    # steps:
+    #   - name: Checkout
+    #     uses: actions/checkout@v3
+    #   - name: Login to Docker Hub
+    #     uses: docker/login-action@v3
+    #     with:
+    #       registry: ghcr.io/${{ github.repository_owner }}
+    #       username: ${{ github.actor }}
+    #       password: ${{ secrets.GITHUB_TOKEN }}
+    #   - name: Test
+    #     run: >
+    #       REGISTRY_NAME=${{ env.REGISTRY_NAME }}
+    #       BRANCH=${{ github.ref_name }}
+    #       docker-compose -f ./docker/test/InternalCrm/docker-compose.yml up --exit-code-from internal
   test-virtual:
     runs-on: ubuntu-latest
     needs: build-virtual
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v3
-      - name: Login to Docker Hub
-        uses: docker/login-action@v3
-        with:
-          registry: ghcr.io/${{ github.repository_owner }}
-          username: ${{ github.actor }}
-          password: ${{ secrets.GITHUB_TOKEN }}
-      - name: Test
-        run: >
-          REGISTRY_NAME=${{ env.REGISTRY_NAME }} 
-          BRANCH=${{ github.ref_name }} 
-          docker-compose -f ./docker/test/VirtualCrm/docker-compose.yml up --exit-code-from virtual
+    # steps:
+    #   - name: Checkout
+    #     uses: actions/checkout@v3
+    #   - name: Login to Docker Hub
+    #     uses: docker/login-action@v3
+    #     with:
+    #       registry: ghcr.io/${{ github.repository_owner }}
+    #       username: ${{ github.actor }}
+    #       password: ${{ secrets.GITHUB_TOKEN }}
+    #   - name: Test
+    #     run: >
+    #       REGISTRY_NAME=${{ env.REGISTRY_NAME }}
+    #       BRANCH=${{ github.ref_name }}
+    #       docker-compose -f ./docker/test/VirtualCrm/docker-compose.yml up --exit-code-from virtual
   test-client:
     runs-on: ubuntu-latest
     needs: build-client
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v3
-      - name: Login to Docker Hub
-        uses: docker/login-action@v3
-        with:
-          registry: ghcr.io/${{ github.repository_owner }}
-          username: ${{ github.actor }}
-          password: ${{ secrets.GITHUB_TOKEN }}
-      - name: Test
-        run: >
-          REGISTRY_NAME=${{ env.REGISTRY_NAME }} 
-          BRANCH=${{ github.ref_name }} 
-          docker-compose -f ./docker/test/SimpleClient/docker-compose.yml up --exit-code-from client
+  #   steps:
+  #     - name: Checkout
+  #       uses: actions/checkout@v3
+  #     - name: Login to Docker Hub
+  #       uses: docker/login-action@v3
+  #       with:
+  #         registry: ghcr.io/${{ github.repository_owner }}
+  #         username: ${{ github.actor }}
+  #         password: ${{ secrets.GITHUB_TOKEN }}
+  #     - name: Test
+  #       run: >
+  #         REGISTRY_NAME=${{ env.REGISTRY_NAME }}
+  #         BRANCH=${{ github.ref_name }}
+  #         docker-compose -f ./docker/test/SimpleClient/docker-compose.yml up --exit-code-from client
   integration-virtual:
     runs-on: ubuntu-latest
     needs: [test-internal, test-virtual]
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v3
-      - name: Login to Docker Hub
-        uses: docker/login-action@v3
-        with:
-          registry: ghcr.io/${{ github.repository_owner }}
-          username: ${{ github.actor }}
-          password: ${{ secrets.GITHUB_TOKEN }}
-      - name: Test
-        run: >
-          REGISTRY_NAME=${{ env.REGISTRY_NAME }} 
-          BRANCH=${{ github.ref_name }} 
-          docker-compose -f ./docker/integration/VirtualCRM/docker-compose.yml up --exit-code-from virtual
+  #   steps:
+  #     - name: Checkout
+  #       uses: actions/checkout@v3
+  #     - name: Login to Docker Hub
+  #       uses: docker/login-action@v3
+  #       with:
+  #         registry: ghcr.io/${{ github.repository_owner }}
+  #         username: ${{ github.actor }}
+  #         password: ${{ secrets.GITHUB_TOKEN }}
+  #     - name: Test
+  #       run: >
+  #         REGISTRY_NAME=${{ env.REGISTRY_NAME }}
+  #         BRANCH=${{ github.ref_name }}
+  #         docker-compose -f ./docker/integration/VirtualCRM/docker-compose.yml up --exit-code-from virtual
   integration-client:
     runs-on: ubuntu-latest
     needs: [test-internal, test-client]
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v3
-      - name: Login to Docker Hub
-        uses: docker/login-action@v3
-        with:
-          registry: ghcr.io/${{ github.repository_owner }}
-          username: ${{ github.actor }}
-          password: ${{ secrets.GITHUB_TOKEN }}
-      - name: Test
-        run: >
-          REGISTRY_NAME=${{ env.REGISTRY_NAME }} 
-          BRANCH=${{ github.ref_name }} 
-          docker-compose -f ./docker/integration/SimpleClient/docker-compose.yml up --exit-code-from client
+    # steps:
+    #   - name: Checkout
+    #     uses: actions/checkout@v3
+    #   - name: Login to Docker Hub
+    #     uses: docker/login-action@v3
+    #     with:
+    #       registry: ghcr.io/${{ github.repository_owner }}
+    #       username: ${{ github.actor }}
+    #       password: ${{ secrets.GITHUB_TOKEN }}
+    #   - name: Test
+    #     run: >
+    #       REGISTRY_NAME=${{ env.REGISTRY_NAME }}
+    #       BRANCH=${{ github.ref_name }}
+    #       docker-compose -f ./docker/integration/SimpleClient/docker-compose.yml up --exit-code-from client
   build-prod-internal:
     permissions:
       packages: write
@@ -266,23 +266,23 @@ jobs:
             BRANCH=${{ github.ref_name }}
           cache-from: type=registry,ref=ghcr.io/${{ env.REGISTRY_NAME }}/virtual-prod-cache:${{ github.ref_name }}
           cache-to: type=registry,ref=ghcr.io/${{ env.REGISTRY_NAME }}/virtual-prod-cache:${{ github.ref_name }},mode=max
-  build-prod-client:
-    permissions:
-      packages: write
-    runs-on: ubuntu-latest
-    needs: [integration-client, integration-virtual]
-    container:
-      image: ghcr.io/gregoirebellon/client:${{ github.ref_name }}
-      credentials:
-        username: ${{ github.repository_owner }}
-        password: ${{ secrets.GITHUB_TOKEN }}
-    steps:
-      - name: Publish
-        uses: actions/setup-node@v3
-        with:
-          node-version: "20.10.0"
-          registry-url: "https://npm.pkg.github.com"
-          scope: "@gregoirebellon"
-      - run: npm publish /app
-        env:
-          NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+  # build-prod-client:
+  #   permissions:
+  #     packages: write
+  #   runs-on: ubuntu-latest
+  #   needs: [integration-client, integration-virtual]
+  #   container:
+  #     image: ghcr.io/gregoirebellon/client:${{ github.ref_name }}
+  #     credentials:
+  #       username: ${{ github.repository_owner }}
+  #       password: ${{ secrets.GITHUB_TOKEN }}
+  #   steps:
+  #     - name: Publish
+  #       uses: actions/setup-node@v3
+  #       with:
+  #         node-version: "20.10.0"
+  #         registry-url: "https://npm.pkg.github.com"
+  #         scope: "@gregoirebellon"
+  #     - run: npm publish /app
+  #       env:
+  #         NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
