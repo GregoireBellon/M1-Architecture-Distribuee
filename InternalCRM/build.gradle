@@ -72,7 +72,7 @@ jar {
     duplicatesStrategy(DuplicatesStrategy.EXCLUDE)
     manifest {
         attributes(
-            'Main-Class': 'application.mainClass'
+            'Main-Class': 'internalcrm.App'
         )
     }
     from{
