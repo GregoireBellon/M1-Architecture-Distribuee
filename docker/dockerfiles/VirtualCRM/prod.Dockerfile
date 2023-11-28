@@ -13,4 +13,6 @@ COPY --from=base --chown=appuser:appgroup /app/build/libs/VirtualCRM-0.0.1-SNAPS
 
 ARG PORT=8090
 
+###test
+
 CMD [ "java","-Dserver.port=$PORT", "-jar", "app.jar" ]
