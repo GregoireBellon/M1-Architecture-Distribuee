@@ -5,11 +5,11 @@ services:
     depends_on:
       - internal
     image: ghcr.io/$REGISTRY_NAME/virtual:$BRANCH
-    command: sh -c "gradle integrationTest -x compileThrift"
+    command: sh -c "gradle --no-daemon integrationTest -x compileThrift"
     environment:
       - INTERNAL_CRM_URL=internal
       - INTERNAL_CRM_POST=9090
 
   internal:
     image: ghcr.io/$REGISTRY_NAME/internal:$BRANCH
-    command: gradle run -x compileThrift
+    command: gradle --no-daemon run -x compileThrift

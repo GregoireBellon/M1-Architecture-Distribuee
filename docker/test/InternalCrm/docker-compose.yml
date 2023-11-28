@@ -4,4 +4,4 @@ services:
   internal:
     image: ghcr.io/$REGISTRY_NAME/internal:$BRANCH
     working_dir: /app
-    command: gradle test -x compileThrift
+    command: gradle --no-daemon test -x compileThrift

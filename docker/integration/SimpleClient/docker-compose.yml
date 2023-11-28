@@ -11,4 +11,4 @@ services:
 
   internal:
     image: ghcr.io/$REGISTRY_NAME/internal:$BRANCH
-    command: gradle run -x compileThrift
+    command: gradle --no-daemon run -x compileThrift
