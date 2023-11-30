@@ -1,8 +1,8 @@
 plugins {
-	java
-	id("org.springframework.boot") version "3.1.5"
-	id("io.spring.dependency-management") version "1.1.3"
-	id("io.freefair.lombok") version "8.4"
+    java
+    id("org.springframework.boot") version "3.1.5"
+    id("io.spring.dependency-management") version "1.1.3"
+    id("io.freefair.lombok") version "8.4"
 
 	id("com.linecorp.thrift-gradle-plugin") version "+"
 }
@@ -11,12 +11,12 @@ group = "com.ArchiDistribuee"
 version = "0.0.1-SNAPSHOT"
 
 java {
-	sourceCompatibility = JavaVersion.VERSION_17
+    sourceCompatibility = JavaVersion.VERSION_17
 }
 
 
 repositories {
-	mavenCentral()
+    mavenCentral()
 }
 
 dependencies {
@@ -25,6 +25,7 @@ dependencies {
 	implementation("org.springframework.boot:spring-boot-starter-web")
 	testImplementation("org.springframework.boot:spring-boot-starter-test")
 	implementation("org.springframework.boot:spring-boot-starter-webflux")
+	implementation("org.springframework.boot:spring-boot-starter-oauth2-client")
 
 	implementation ("org.mapstruct:mapstruct:1.5.5.Final")
     annotationProcessor ("org.mapstruct:mapstruct-processor:1.5.5.Final")

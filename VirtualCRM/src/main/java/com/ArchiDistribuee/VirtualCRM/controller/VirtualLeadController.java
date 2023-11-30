@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.ArchiDistribuee.VirtualCRM.dto.VirtualLeadDto;
+import com.ArchiDistribuee.VirtualCRM.entity.SalesForceLead;
 import com.ArchiDistribuee.VirtualCRM.service.VirtualLeadService;
 
 @RestController
@@ -39,5 +40,5 @@ public class VirtualLeadController {
 
         return ResponseEntity.ok(this.virtualLeadService.getVirtualLeadsByDate(startDate, endDate));
     }
-
-}
+                
+      }
