@@ -7,7 +7,7 @@ services:
       context: ../../../
       dockerfile: docker/dockerfiles/VirtualCRM/main.Dockerfile
 
-    command: sh -c "gradle test integrationTest --info"
+    command: sh -c "gradle test integrationTest"
 
     environment:
       - INTERNAL_CRM_URL=internal
