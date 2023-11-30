@@ -1,11 +1,13 @@
 package com.ArchiDistribuee.VirtualCRM.service;
 
-import org.springframework.stereotype.Service;
-import java.util.Set;
-import java.util.HashSet;
 import java.time.ZonedDateTime;
 import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.Set;
 import java.util.stream.Collectors;
+
+import org.springframework.stereotype.Service;
+import org.springframework.web.reactive.function.client.WebClientRequestException;
 
 import com.ArchiDistribuee.VirtualCRM.dto.VirtualLeadDto;
 import com.ArchiDistribuee.VirtualCRM.entity.GeographicPoint;
@@ -96,20 +98,24 @@ public class VirtualLeadService {
         Set<VirtualLead> virtualLeads = new HashSet<VirtualLead>();
         virtualLeads
                 .addAll(internalLeads.stream().map(VirtualLeadMapper.INSTANCE::fromInternalLead)
-                        .collect(Collectors.toList()));
+                        .toList());
+
         virtualLeads.addAll(VirtualLeadMapper.INSTANCE.fromSalesForceLead(salesForceLeads));
 
-        for (VirtualLead virtualLead : virtualLeads) {
-            GeographicPoint geographicPoint = openStreetMapRepository
-                    .getGeographicPoint(
-                            virtualLead.getStreet(),
-                            virtualLead.getCity(),
-                            virtualLead.getCountry(),
-                            virtualLead.getState(),
-                            virtualLead.getPostalCode())
-                    .orElse(null);
-            virtualLead.setGeographicPoint(geographicPoint);
-        }
+        virtualLeads.parallelStream().forEach(v -> {
+            try {
+                v.setGeographicPoint(this.openStreetMapRepository
+                        .getGeographicPoint(
+                                v.getStreet(),
+                                v.getCity(),
+                                v.getCountry(),
+                                v.getState(),
+                                v.getPostalCode())
+                        .orElse(null));
+            } catch (WebClientRequestException e) {
+                log.error("Erreur lors de la récupération du geographic point de " + v.getFirstName() + " "+ v.getLastName());
+            }
+        });
 
         return virtualLeads
                 .stream()
