@@ -40,7 +40,7 @@ function parseSalary(salary: string): number {
 async function inputLeadsByDate(startDate: DateTime, endDate: DateTime): Promise<Lead[]> {
   try {
     const { data } = await httpClient.get<Lead[]>('/leads/byDate', {
-      params: { startDate: startDate.toISO(), endDate: endDate.toISO() },
+      params: { startDate: startDate.toUTC().toISO(), endDate: endDate.toUTC().toISO() },
     });
     return data;
   } catch (e) {
