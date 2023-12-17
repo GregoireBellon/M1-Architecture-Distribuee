@@ -3,12 +3,9 @@ package com.ArchiDistribuee.VirtualCRM.repository;
 
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
-
 import java.time.ZoneId;
 import java.time.ZonedDateTime;
-import java.time.format.DateTimeFormatter;
 import java.util.Set;
-
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -40,11 +37,10 @@ public class SalesForceCRMRepositoryIntegrationTest {
 
     }
 
-      @Test
+    @Test
     void whenGetSalesForceLeadByDateShouldReturnValid() {
 
     ZoneId _zoneId = ZoneId.of("UTC");
-
     ZonedDateTime start = ZonedDateTime.now(_zoneId).minusYears(10);
     ZonedDateTime end = ZonedDateTime.now(_zoneId);
 
