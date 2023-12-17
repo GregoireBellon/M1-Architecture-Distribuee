@@ -73,7 +73,6 @@ public class OAuth2ClientConfig {
                                 .baseUrl(basePath)
                                 .apply(oauth2Client.oauth2Configuration())
                                 .build();
-
         }
 
 }

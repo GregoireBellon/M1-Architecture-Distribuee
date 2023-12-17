@@ -62,7 +62,7 @@ public class InternalCRMRepository implements InitializingBean {
             return Optional.of(result);
 
         } catch (Exception e) {
-            log.error("Erreur lors de la communication Thrift : " + e.getMessage());
+            log.error("Error during Thrift communication : " + e.getMessage());
         }
         return Optional.empty();
     }
