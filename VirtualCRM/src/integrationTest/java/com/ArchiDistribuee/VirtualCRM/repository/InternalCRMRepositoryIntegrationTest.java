@@ -32,7 +32,7 @@ public class InternalCRMRepositoryIntegrationTest {
     @Test
     void whenGetLeadsShouldReturnValidResult() {
 
-        Set<InternalLead> leads = this.repository.getLeads(15D, 55D);
+        Set<InternalLead> leads = this.repository.getLeads(15D, 55D, "Alsace");
 
         assertNotEquals(0, leads.size());
     }
