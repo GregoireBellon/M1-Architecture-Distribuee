@@ -39,12 +39,12 @@ public class SalesForceCRMRepository {
     }
  
     public Set<SalesForceLead> getLeadsByDate(ZonedDateTime startDate, ZonedDateTime endDate) {
-    String start = startDate.format(DateTimeFormatter.ISO_OFFSET_DATE_TIME);
-    String end = endDate.format(DateTimeFormatter.ISO_OFFSET_DATE_TIME);
+    String startDateStr = startDate.format(DateTimeFormatter.ISO_OFFSET_DATE_TIME);
+    String endDateStr = endDate.format(DateTimeFormatter.ISO_OFFSET_DATE_TIME);
 
     String query = "SELECT FirstName, LastName, AnnualRevenue, Phone, Street, City, State, Company, CreatedDate, PostalCode , Country " +
                    "FROM Lead " +
-                   "WHERE CreatedDate >= " + start + " AND CreatedDate <= " + end;
+                   "WHERE CreatedDate >= " + startDateStr + " AND CreatedDate <= " + endDateStr;
             
        SalesforceResponse<SalesForceLead> response = salesforceWebClient.get()
                 .uri(uriBuilder -> uriBuilder.path("/query")
