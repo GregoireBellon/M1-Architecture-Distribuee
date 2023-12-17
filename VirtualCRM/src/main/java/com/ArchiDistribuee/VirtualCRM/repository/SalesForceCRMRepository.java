@@ -21,9 +21,7 @@ public class SalesForceCRMRepository {
         int lowAnnualRevenueInt = (int) lowAnnualRevenue;
         int highAnnualRevenueInt = (int) highAnnualRevenue;
         String query = "SELECT FirstName, LastName, AnnualRevenue, Phone, Street, City, State, Company ,CreatedDate , PostalCode , Country  FROM Lead"
-                +
-                " WHERE AnnualRevenue > " + lowAnnualRevenueInt +
-                " AND AnnualRevenue < " + highAnnualRevenueInt;
+                + " WHERE AnnualRevenue > " + lowAnnualRevenueInt + " AND AnnualRevenue < " + highAnnualRevenueInt;
 
         SalesforceResponse<SalesForceLead> response = salesforceWebClient.get()
                 .uri(uriBuilder -> uriBuilder.path("/query")
@@ -43,8 +41,7 @@ public class SalesForceCRMRepository {
     String endDateStr = endDate.format(DateTimeFormatter.ISO_OFFSET_DATE_TIME);
 
     String query = "SELECT FirstName, LastName, AnnualRevenue, Phone, Street, City, State, Company, CreatedDate, PostalCode , Country " +
-                   "FROM Lead " +
-                   "WHERE CreatedDate >= " + startDateStr + " AND CreatedDate <= " + endDateStr;
+                   "FROM Lead " + "WHERE CreatedDate >= " + startDateStr + " AND CreatedDate <= " + endDateStr;
             
        SalesforceResponse<SalesForceLead> response = salesforceWebClient.get()
                 .uri(uriBuilder -> uriBuilder.path("/query")
