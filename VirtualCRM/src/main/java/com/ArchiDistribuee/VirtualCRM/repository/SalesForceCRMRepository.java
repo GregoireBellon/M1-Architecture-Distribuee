@@ -18,12 +18,12 @@ public class SalesForceCRMRepository {
     private WebClient salesforceWebClient;
     
     public Set<SalesForceLead> getLeads(double lowAnnualRevenue, double highAnnualRevenue, String state) {
-        int _lowAnnualRevenue = (int) lowAnnualRevenue;
-        int _highAnnualRevenue = (int) highAnnualRevenue;
+        int lowAnnualRevenueInt = (int) lowAnnualRevenue;
+        int highAnnualRevenueInt = (int) highAnnualRevenue;
         String query = "SELECT FirstName, LastName, AnnualRevenue, Phone, Street, City, State, Company ,CreatedDate , PostalCode , Country  FROM Lead"
                 +
-                " WHERE AnnualRevenue > " + _lowAnnualRevenue +
-                " AND AnnualRevenue < " + _highAnnualRevenue;
+                " WHERE AnnualRevenue > " + lowAnnualRevenueInt +
+                " AND AnnualRevenue < " + highAnnualRevenueInt;
 
         SalesforceResponse<SalesForceLead> response = salesforceWebClient.get()
                 .uri(uriBuilder -> uriBuilder.path("/query")
