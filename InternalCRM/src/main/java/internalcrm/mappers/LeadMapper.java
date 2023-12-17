@@ -16,4 +16,6 @@ public interface LeadMapper {
 
     InternalLead toInternalLead(ThriftInternalLeadDTO lead);
 
+    Set<InternalLead> toInternalLead(Set<ThriftInternalLeadDTO> lead);
+
 }

@@ -51,10 +51,9 @@ public class VirtualLeadService {
         }
 
         ArrayList<VirtualLead> virtualLeads = new ArrayList<VirtualLead>();
-        virtualLeads
-                .addAll(internalLeads.stream().map(VirtualLeadMapper.INSTANCE::fromInternalLead)
+        virtualLeads.addAll(internalLeads.stream().map(VirtualLeadMapper.INSTANCE::fromInternalLead)
                         .collect(Collectors.toList()));
-        virtualLeads.addAll(salesForceLeads.stream().map(VirtualLead::fromSalesForceLead).collect(Collectors.toList()));
+        virtualLeads.addAll(salesForceLeads.stream().map(VirtualLeadMapper.INSTANCE::fromSalesForceLead).collect(Collectors.toList()));
 
         for (VirtualLead virtualLead : virtualLeads) {
             GeographicPoint geographicPoint = openStreetMapRepository
@@ -94,11 +93,11 @@ public class VirtualLeadService {
             log.error("Cannot fetch from SalesForce", e);
         }
 
-        ArrayList<VirtualLead> virtualLeads = new ArrayList<VirtualLead>();
+        Set<VirtualLead> virtualLeads = new HashSet<VirtualLead>();
         virtualLeads
                 .addAll(internalLeads.stream().map(VirtualLeadMapper.INSTANCE::fromInternalLead)
                         .collect(Collectors.toList()));
-        virtualLeads.addAll(salesForceLeads.stream().map(VirtualLead::fromSalesForceLead).collect(Collectors.toList()));
+        virtualLeads.addAll(VirtualLeadMapper.INSTANCE.fromSalesForceLead(salesForceLeads));
 
         for (VirtualLead virtualLead : virtualLeads) {
             GeographicPoint geographicPoint = openStreetMapRepository
@@ -117,5 +116,5 @@ public class VirtualLeadService {
                 .map(VirtualLeadMapper.INSTANCE::toVirtualLeadDto)
                 .collect(Collectors.toSet());
     }
-
+        
 }
