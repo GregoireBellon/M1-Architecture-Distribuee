@@ -11,7 +11,7 @@ import com.ArchiDistribuee.VirtualCRM.entity.SalesForceLead;
 import com.ArchiDistribuee.VirtualCRM.entity.SalesforceResponse;
 
 @Repository
-public class SalesForceCRMRepository {
+public class SalesForceCRMRepository implements GenericCRMRepository{
 
     @Autowired
     private WebClient salesforceWebClient;

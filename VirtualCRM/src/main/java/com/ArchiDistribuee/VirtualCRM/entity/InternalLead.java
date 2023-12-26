@@ -2,6 +2,8 @@ package com.ArchiDistribuee.VirtualCRM.entity;
 
 import java.time.ZonedDateTime;
 
+import com.ArchiDistribuee.VirtualCRM.mapper.VirtualLeadMapper;
+
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -15,7 +17,7 @@ import lombok.extern.slf4j.Slf4j;
 @NoArgsConstructor
 @AllArgsConstructor
 @Slf4j
-public class InternalLead {
+public class InternalLead implements GenericLead{
     private String id;
     private String name;
     private double annualRevenue;
@@ -46,5 +48,18 @@ public class InternalLead {
             return "";
         }
         return words[1];
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (obj instanceof InternalLead l) {
+            return l.getId() == this.getId();
+        }
+        return false;
+    }
+
+    @Override
+    public VirtualLead toVirtualLead() {
+        return VirtualLeadMapper.INSTANCE.fromInternalLead(this);
     }
 }

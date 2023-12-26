@@ -30,8 +30,6 @@ public class SalesForceCRMRepositoryIntegrationTest {
 
         SalesForceLead firstLead = result.iterator().next();
 
-        System.out.println("Lead : " + firstLead);
-
         assertNotNull(firstLead.getFirstName());
         assertNotNull(firstLead.getLastName());
         assertNotNull(firstLead.getAnnualRevenue());
