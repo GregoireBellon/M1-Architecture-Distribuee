@@ -6,7 +6,7 @@ It's kind of a monorepo : the thrift types are shared between every component, a
 The application is fully tested using a dockerized environnment and some github pipeline. The dockerfiles and docker compose files are in the docker directory. The pipelines are deglared in the .github directory, and are executed on every push and merge on the dev branch.
 
 ## How to run it
-For the project to work, evey component needs to be up. You need to have thrift installed on your computer (it works with the 0.14).
+For the project to work, evey component needs to be up. You need to have thrift installed on your computer (it is compatible with version 0.14).
 
 ### InternalCRM
 You need to have Java 17 installed on your computer.
