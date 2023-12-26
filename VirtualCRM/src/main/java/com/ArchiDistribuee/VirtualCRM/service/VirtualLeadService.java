@@ -10,64 +10,57 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.reactive.function.client.WebClientRequestException;
 
 import com.ArchiDistribuee.VirtualCRM.dto.VirtualLeadDto;
-import com.ArchiDistribuee.VirtualCRM.entity.GeographicPoint;
-import com.ArchiDistribuee.VirtualCRM.entity.InternalLead;
-import com.ArchiDistribuee.VirtualCRM.entity.SalesForceLead;
+import com.ArchiDistribuee.VirtualCRM.entity.GenericLead;
 import com.ArchiDistribuee.VirtualCRM.entity.VirtualLead;
 import com.ArchiDistribuee.VirtualCRM.exception.InvalidAnnualRevenuesException;
 import com.ArchiDistribuee.VirtualCRM.exception.InvalidDatesException;
 import com.ArchiDistribuee.VirtualCRM.mapper.VirtualLeadMapper;
+import com.ArchiDistribuee.VirtualCRM.repository.GenericCRMRepository;
 import com.ArchiDistribuee.VirtualCRM.repository.InternalCRMRepository;
 import com.ArchiDistribuee.VirtualCRM.repository.OpenStreetMapRepository;
 import com.ArchiDistribuee.VirtualCRM.repository.SalesForceCRMRepository;
 
-import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
 @Service
-@RequiredArgsConstructor
 @Slf4j
 public class VirtualLeadService {
 
-    private final InternalCRMRepository internalCRMRepository;
     private final OpenStreetMapRepository openStreetMapRepository;
-    private final SalesForceCRMRepository salesForceCRMRepository;
+    private final Set<GenericCRMRepository> crmRepositories = new HashSet<>();
+
+    public VirtualLeadService(InternalCRMRepository internalCRMRepository,
+            OpenStreetMapRepository openStreetMapRepository, SalesForceCRMRepository salesForceCRMRepository) {
+        this.openStreetMapRepository = openStreetMapRepository;
+
+        this.crmRepositories.add(internalCRMRepository);
+        this.crmRepositories.add(salesForceCRMRepository);
+
+    }
 
     public Set<VirtualLeadDto> getVirtualLeads(double lowAnnualRevenue, double highAnnualRevenue, String state) {
+
+        // Verification of the input
+
         if (highAnnualRevenue < lowAnnualRevenue) {
             throw new InvalidAnnualRevenuesException(lowAnnualRevenue, highAnnualRevenue);
         }
 
-        Set<InternalLead> internalLeads = new HashSet<InternalLead>();
-        try {
-            internalLeads = internalCRMRepository.getLeads(lowAnnualRevenue, highAnnualRevenue, state);
-        } catch (Exception e) {
-            log.error("Cannot fetch from internal CRM", e);
+        // Collection of data
+        final Set<VirtualLead> virtualLeads = new HashSet<>();
+
+        for (GenericCRMRepository crmRepository : this.crmRepositories) {
+
+            try {
+                virtualLeads.addAll(crmRepository.getLeads(lowAnnualRevenue, highAnnualRevenue, state).stream()
+                        .map(GenericLead::toVirtualLead).toList());
+            } catch (Exception e) {
+                log.error("Cannot fetch from " + crmRepository.getClass(), e);
+            }
+
         }
 
-        Set<SalesForceLead> salesForceLeads = new HashSet<SalesForceLead>();
-        try {
-            salesForceLeads = salesForceCRMRepository.getLeads(lowAnnualRevenue, highAnnualRevenue, state);
-        } catch (Exception e) {
-            log.error("Cannot fetch from SalesForce", e);
-        }
-
-        ArrayList<VirtualLead> virtualLeads = new ArrayList<VirtualLead>();
-        virtualLeads.addAll(internalLeads.stream().map(VirtualLeadMapper.INSTANCE::fromInternalLead)
-                        .collect(Collectors.toList()));
-        virtualLeads.addAll(salesForceLeads.stream().map(VirtualLeadMapper.INSTANCE::fromSalesForceLead).collect(Collectors.toList()));
-
-        for (VirtualLead virtualLead : virtualLeads) {
-            GeographicPoint geographicPoint = openStreetMapRepository
-                    .getGeographicPoint(
-                            virtualLead.getStreet(),
-                            virtualLead.getCity(),
-                            virtualLead.getCountry(),
-                            virtualLead.getState(),
-                            virtualLead.getPostalCode())
-                    .orElse(null);
-            virtualLead.setGeographicPoint(geographicPoint);
-        }
+        appendGeographicPoint(virtualLeads);
 
         return virtualLeads
                 .stream()
@@ -75,34 +68,9 @@ public class VirtualLeadService {
                 .collect(Collectors.toSet());
     }
 
-    public Set<VirtualLeadDto> getVirtualLeadsByDate(ZonedDateTime startDate, ZonedDateTime endDate) {
+    private void appendGeographicPoint(Set<VirtualLead> leads) {
 
-        if (endDate.isBefore(startDate)) {
-            throw new InvalidDatesException(startDate, endDate);
-        }
-
-        Set<InternalLead> internalLeads = new HashSet<InternalLead>();
-        try {
-            internalLeads = internalCRMRepository.getLeadsByDate(startDate, endDate);
-        } catch (Exception e) {
-            log.error("Cannot fetch from internal CRM", e);
-        }
-
-        Set<SalesForceLead> salesForceLeads = new HashSet<SalesForceLead>();
-        try {
-            salesForceLeads = salesForceCRMRepository.getLeadsByDate(startDate, endDate);
-        } catch (Exception e) {
-            log.error("Cannot fetch from SalesForce", e);
-        }
-
-        Set<VirtualLead> virtualLeads = new HashSet<VirtualLead>();
-        virtualLeads
-                .addAll(internalLeads.stream().map(VirtualLeadMapper.INSTANCE::fromInternalLead)
-                        .toList());
-
-        virtualLeads.addAll(VirtualLeadMapper.INSTANCE.fromSalesForceLead(salesForceLeads));
-
-        virtualLeads.parallelStream().forEach(v -> {
+        leads.parallelStream().forEach(v -> {
             try {
                 v.setGeographicPoint(this.openStreetMapRepository
                         .getGeographicPoint(
@@ -113,14 +81,39 @@ public class VirtualLeadService {
                                 v.getPostalCode())
                         .orElse(null));
             } catch (WebClientRequestException e) {
-                log.error("Erreur lors de la récupération du geographic point de " + v.getFirstName() + " "+ v.getLastName());
+                log.error("Erreur lors de la récupération du geographic point de " + v.getFirstName() + " "
+                        + v.getLastName());
             }
         });
+
+    }
+
+    public Set<VirtualLeadDto> getVirtualLeadsByDate(ZonedDateTime startDate, ZonedDateTime endDate) {
+
+        if (endDate.isBefore(startDate)) {
+            throw new InvalidDatesException(startDate, endDate);
+        }
+
+        // Collection of data
+        final Set<VirtualLead> virtualLeads = new HashSet<>();
+
+        for (GenericCRMRepository crmRepository : this.crmRepositories) {
+
+            try {
+                virtualLeads.addAll(crmRepository.getLeadsByDate(startDate, endDate).stream()
+                        .map(GenericLead::toVirtualLead).toList());
+            } catch (Exception e) {
+                log.error("Cannot fetch from " + crmRepository.getClass(), e);
+            }
+
+        }
+
+        appendGeographicPoint(virtualLeads);
 
         return virtualLeads
                 .stream()
                 .map(VirtualLeadMapper.INSTANCE::toVirtualLeadDto)
                 .collect(Collectors.toSet());
     }
-        
+
 }

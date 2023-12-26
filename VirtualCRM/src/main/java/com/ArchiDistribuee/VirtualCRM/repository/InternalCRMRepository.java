@@ -25,7 +25,7 @@ import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
 @Repository
-public class InternalCRMRepository implements InitializingBean {
+public class InternalCRMRepository implements InitializingBean, GenericCRMRepository {
 
     private boolean initializationSucceed = false;
 
