@@ -34,6 +34,7 @@ public class SalesForceCRMRepositoryIntegrationTest {
 
         assertNotNull(firstLead.getFirstName());
         assertNotNull(firstLead.getLastName());
+        assertNotNull(firstLead.getAnnualRevenue());
 
     }
 
@@ -54,6 +55,8 @@ public class SalesForceCRMRepositoryIntegrationTest {
 
         assertNotNull(firstLead.getFirstName());
         assertNotNull(firstLead.getLastName());
+        assertNotNull(firstLead.getCreatedDate());
+
 
     }
 
