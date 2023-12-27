@@ -9,7 +9,7 @@ export interface Lead {
   city: string;
   country: string;
   creationDate: Date;
-  geographicalPoint: { latitude: number; longitude: number };
+  geographicalPoint: { latitude: number; longitude: number } | null;
   company: string;
   state: string;
 }

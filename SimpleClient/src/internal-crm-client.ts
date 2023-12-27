@@ -22,11 +22,11 @@ export class InternalCrmClient {
     return ret;
   }
 
-  getAllLeads(): Promise<ThriftInternalLeadDTO[]> {
+  async getAllLeads(): Promise<ThriftInternalLeadDTO[]> {
     return this.connectionWrapper(client => client.getAllLeads()).then(promisedLeads => promisedLeads);
   }
 
-  mergeLeads(leads: Lead[]): Promise<void> {
+  async mergeLeads(leads: Lead[]): Promise<void> {
     const mappedLeads = leads.map(toThriftInternalLeadDto);
 
     return this.connectionWrapper(client => client.addLeads(mappedLeads));

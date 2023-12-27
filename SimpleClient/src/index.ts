@@ -3,7 +3,10 @@ import { Command } from 'commander';
 import figlet from 'figlet';
 import { DateTime } from 'luxon';
 
+import { InternalCrmClient } from './internal-crm-client';
 import { Lead } from './lead';
+import { salesforceLeadtoLead } from './mapper/salesforce-lead-mapper';
+import { SalesforceClient } from './salesforce-client';
 
 const httpClient = axios.create({
   baseURL: process.env.API_BASE_URL ?? 'http://localhost:8080',
@@ -108,6 +111,18 @@ program
     const leads = await inputLeadsBySalary(minSalary, maxSalary, state);
 
     display(leads);
+  });
+
+program
+  .command('merge')
+  .description('Ajoute les leads de salesforce  dans internalCRM')
+  .action(async () => {
+    const salesforceClient = await SalesforceClient.Build();
+    const salesforcesLeads = await salesforceClient.getSalesforceLeads();
+    const internalCrmClient = new InternalCrmClient();
+    await internalCrmClient.mergeLeads(salesforcesLeads.map(salesforceLeadtoLead));
+    const rpcLeads = await internalCrmClient.getAllLeads();
+    console.table(rpcLeads);
   });
 
 program.description("Un CLI pour appeler l'api VirtualCRM");
