@@ -79,5 +79,10 @@ public class LeadServiceImpl implements LeadService.Iface {
         }
 
     }
+
+    @Override
+    public double countLeads() throws TException {
+        return leadRepository.findAll().size();
+    }
     
 }

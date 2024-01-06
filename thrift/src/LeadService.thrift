@@ -21,7 +21,8 @@ service LeadService
         set<ThriftInternalLeadDTO> getLeads(1:double borneInfSalaire, 2:double borneSupSalaire, 3:string state),
         set<ThriftInternalLeadDTO> getLeadsByDate(1:string borneInfDate, 2:string borneSupDate),
         set<ThriftInternalLeadDTO> getAllLeads(),
+        double countLeads(), 
         void addLead(1:ThriftInternalLeadDTO lead),
-	void addLeads(1:set<ThriftInternalLeadDTO> leads)
+	void addLeads(1:set<ThriftInternalLeadDTO> leads),
         void deleteLead(1:ThriftInternalLeadDTO lead),
  }

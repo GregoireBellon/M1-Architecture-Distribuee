@@ -1,4 +1,10 @@
-export interface SalesforceLead {
+export interface SalesforceLeadResponse {
+  totalSize: number;
+  done: boolean;
+  records: SalesforceLead[];
+};
+
+export interface SalesforceLead{
   FirstName: string;
   LastName: string;
   AnnualRevenue: number;

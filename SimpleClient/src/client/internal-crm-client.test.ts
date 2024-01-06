@@ -2,7 +2,7 @@ import { expect, test } from '@jest/globals';
 import { DateTime } from 'luxon';
 
 import { InternalCrmClient } from './internal-crm-client';
-import { Lead } from './lead';
+import { Lead } from '../model/lead';
 
 test('Should get data from InternalCRM', async () => {
   const internalCrmClient = new InternalCrmClient();

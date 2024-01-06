@@ -1,9 +1,9 @@
 import { TBinaryProtocol, TBufferedTransport, createClient, createConnection } from 'thrift';
 
-import { Client } from './gen-nodejs/LeadService';
-import { ThriftInternalLeadDTO } from './gen-nodejs/LeadService_types';
-import { Lead } from './lead';
-import { toThriftInternalLeadDto } from './mapper/lead-mapper';
+import { Client } from '../gen-nodejs/LeadService';
+import { ThriftInternalLeadDTO } from '../gen-nodejs/LeadService_types';
+import { Lead } from '../model/lead';
+import { toThriftInternalLeadDto } from '../mapper/lead-mapper';
 
 export class InternalCrmClient {
   private host: string = process.env.THRIFT_HOST ?? 'localhost';
@@ -25,6 +25,11 @@ export class InternalCrmClient {
   async getAllLeads(): Promise<ThriftInternalLeadDTO[]> {
     return this.connectionWrapper(client => client.getAllLeads()).then(promisedLeads => promisedLeads);
   }
+
+  async countLeads(): Promise<number> {
+    return this.connectionWrapper(client => client.countLeads()).then(leadCount => leadCount);
+  }
+
 
   async mergeLeads(leads: Lead[]): Promise<void> {
     const mappedLeads = leads.map(toThriftInternalLeadDto);

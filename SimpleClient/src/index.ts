@@ -3,10 +3,10 @@ import { Command } from 'commander';
 import figlet from 'figlet';
 import { DateTime } from 'luxon';
 
-import { InternalCrmClient } from './internal-crm-client';
-import { Lead } from './lead';
-import { salesforceLeadtoLead } from './mapper/salesforce-lead-mapper';
-import { SalesforceClient } from './salesforce-client';
+import { InternalCrmClient } from './client/internal-crm-client';
+import { Lead } from './model/lead';
+import { SalesforceClient } from './client/salesforce-client';
+import { fromSalesforceLead, fromThriftInternalLeadDto } from './mapper/lead-mapper';
 
 const httpClient = axios.create({
   baseURL: process.env.API_BASE_URL ?? 'http://localhost:8080',
@@ -14,7 +14,7 @@ const httpClient = axios.create({
 
 const logger = {
   debug: (msg: string): void => {
-    if (process.env.DEBUG === '1') {
+    if (true) {
       console.log(`[debug] ${msg}`);
     }
   },
@@ -117,12 +117,19 @@ program
   .command('merge')
   .description('Ajoute les leads de salesforce  dans internalCRM')
   .action(async () => {
+
+    
     const salesforceClient = await SalesforceClient.Build();
     const salesforcesLeads = await salesforceClient.getSalesforceLeads();
     const internalCrmClient = new InternalCrmClient();
-    await internalCrmClient.mergeLeads(salesforcesLeads.map(salesforceLeadtoLead));
-    const rpcLeads = await internalCrmClient.getAllLeads();
-    console.table(rpcLeads);
+    
+    const initialLeadCount = await internalCrmClient.countLeads();
+    
+    await internalCrmClient.mergeLeads(salesforcesLeads.map(fromSalesforceLead));
+    const leads = (await internalCrmClient.getAllLeads()).map(fromThriftInternalLeadDto);
+
+    console.log(`${leads.length - initialLeadCount} leads ajoutés (de ${initialLeadCount} à ${leads.length})`)
+
   });
 
 program.description("Un CLI pour appeler l'api VirtualCRM");
@@ -132,7 +139,7 @@ async function main() {
     console.log(figlet.textSync('CRM Commander'));
     await program.parseAsync();
   } catch (error) {
-    console.error('[ERREUR :', (error as Error).message, ']');
+    console.error('[ERREUR :', error);
   }
 }
 
