@@ -3,3 +3,4 @@ bun.lockb
 build
 src/gen-*
 .env
+src/salesforce-var.json
