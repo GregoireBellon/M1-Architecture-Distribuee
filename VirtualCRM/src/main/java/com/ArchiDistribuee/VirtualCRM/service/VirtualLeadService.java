@@ -1,7 +1,6 @@
 package com.ArchiDistribuee.VirtualCRM.service;
 
 import java.time.ZonedDateTime;
-import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -25,6 +24,9 @@ import lombok.extern.slf4j.Slf4j;
 @Service
 @Slf4j
 public class VirtualLeadService {
+    
+    // Activating this will likely ban your ip from the nominatim API;
+    private final static boolean ACTIVATE_OSM = false; 
 
     private final OpenStreetMapRepository openStreetMapRepository;
     private final Set<GenericCRMRepository> crmRepositories = new HashSet<>();
@@ -60,7 +62,9 @@ public class VirtualLeadService {
 
         }
 
-        appendGeographicPoint(virtualLeads);
+        if(ACTIVATE_OSM){
+            appendGeographicPoint(virtualLeads);
+        }
 
         return virtualLeads
                 .stream()
@@ -108,7 +112,9 @@ public class VirtualLeadService {
 
         }
 
-        appendGeographicPoint(virtualLeads);
+        if(ACTIVATE_OSM){
+            appendGeographicPoint(virtualLeads);
+        }
 
         return virtualLeads
                 .stream()
