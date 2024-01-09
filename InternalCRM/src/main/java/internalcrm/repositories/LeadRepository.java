@@ -21,7 +21,7 @@ public class LeadRepository {
     private static final Set<InternalLead> leadDTOs = new HashSet<>();
 
     static {
-        for (int i = 0; i < 1000; i++) {
+        for (int i = 0; i < 50; i++) {
             leadDTOs.add(
                     new InternalLead(UUID.randomUUID().toString(),
                             faker.name().lastName() + ", " + faker.name().firstName(),
