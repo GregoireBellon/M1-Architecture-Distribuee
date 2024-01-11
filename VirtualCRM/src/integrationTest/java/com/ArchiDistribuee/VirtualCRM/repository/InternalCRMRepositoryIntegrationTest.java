@@ -5,6 +5,7 @@ import static org.junit.jupiter.api.Assertions.assertNotEquals;
 
 import java.time.ZonedDateTime;
 import java.util.Set;
+import java.util.UUID;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,7 +33,7 @@ public class InternalCRMRepositoryIntegrationTest {
     @Test
     void whenGetLeadsShouldReturnValidResult() {
 
-        this.repository.addLead(new InternalLead("ID_TEST_1", "test", 40000, "", "", "", "", "", ZonedDateTime.now(), "", "Alsace"));
+        this.repository.addLead(new InternalLead(UUID.randomUUID().toString(), "test", 40000, "", "", "", "", "", ZonedDateTime.now(), "", "Alsace"));
 
         Set<InternalLead> leads = this.repository.getLeads(15000D, 55000D, "Alsace");
 
@@ -41,7 +42,7 @@ public class InternalCRMRepositoryIntegrationTest {
 
     @Test
     void whenGetLeadsByDateShouldReturnValidResult() {
-                this.repository.addLead(new InternalLead("ID_TEST_2", "test", 40000, "", "", "", "", "", ZonedDateTime.now().minusYears(2), "", "Alsace"));
+                this.repository.addLead(new InternalLead(UUID.randomUUID().toString(), "test", 40000, "", "", "", "", "", ZonedDateTime.now().minusYears(2), "", "Alsace"));
 
         Set<InternalLead> leads = this.repository.getLeadsByDate(ZonedDateTime.now().minusYears(5),
                 ZonedDateTime.now());
