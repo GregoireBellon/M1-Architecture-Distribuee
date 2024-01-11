@@ -29,6 +29,9 @@ public class VirtualLeadController {
             @RequestParam(name = "highAnnualRevenue", required = true) double highAnnualRevenue,
             @RequestParam(name = "state", required = true) String state) {
 
+                if (state.trim().isEmpty()) {
+                    return ResponseEntity.badRequest().body(null);
+                }
         return ResponseEntity.ok(this.virtualLeadService.getVirtualLeads(lowAnnualRevenue, highAnnualRevenue, state));
     }
 
