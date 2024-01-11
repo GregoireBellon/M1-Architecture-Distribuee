@@ -26,19 +26,22 @@ public class InternalCRMRepositoryIntegrationTest {
 
         Set<InternalLead> leads = this.repository.getAllLeads();
 
-        assertEquals(1000, leads.size());
+        assertNotEquals(0, leads.size());
     }
 
     @Test
     void whenGetLeadsShouldReturnValidResult() {
 
-        Set<InternalLead> leads = this.repository.getLeads(15D, 55D, "Alsace");
+        this.repository.addLead(new InternalLead("ID_TEST_1", "test", 40000, "", "", "", "", "", ZonedDateTime.now(), "", "Alsace"));
+
+        Set<InternalLead> leads = this.repository.getLeads(15000D, 55000D, "Alsace");
 
         assertNotEquals(0, leads.size());
     }
 
     @Test
     void whenGetLeadsByDateShouldReturnValidResult() {
+                this.repository.addLead(new InternalLead("ID_TEST_2", "test", 40000, "", "", "", "", "", ZonedDateTime.now().minusYears(2), "", "Alsace"));
 
         Set<InternalLead> leads = this.repository.getLeadsByDate(ZonedDateTime.now().minusYears(5),
                 ZonedDateTime.now());
