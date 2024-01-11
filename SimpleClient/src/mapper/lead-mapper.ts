@@ -1,4 +1,3 @@
-import { DateTime } from 'luxon';
 import { ThriftInternalLeadDTO } from '../gen-nodejs/LeadService_types';
 import { Lead } from '../model/lead';
 import { SalesforceLead } from '../model/salesforce-lead';
@@ -22,8 +21,8 @@ export function toThriftInternalLeadDto(lead: Lead): ThriftInternalLeadDTO {
 export function fromThriftInternalLeadDto(thriftLead: ThriftInternalLeadDTO): Lead {
   return {
     id: thriftLead.id,
-    firstName: thriftLead.name.split(" ")[0],
-    lastName: thriftLead.name.split(" ").slice(1).join(" "),
+    firstName: thriftLead.name.split(' ')[0],
+    lastName: thriftLead.name.split(' ').slice(1).join(' '),
     company: thriftLead.company,
     annualRevenue: thriftLead.annualRevenue,
     country: thriftLead.country,
@@ -36,7 +35,6 @@ export function fromThriftInternalLeadDto(thriftLead: ThriftInternalLeadDTO): Le
     geographicalPoint: null,
   };
 }
-
 
 export function fromSalesforceLead(salesforceLead: SalesforceLead): Lead {
   return {
@@ -55,5 +53,3 @@ export function fromSalesforceLead(salesforceLead: SalesforceLead): Lead {
     geographicalPoint: null,
   };
 }
-
-

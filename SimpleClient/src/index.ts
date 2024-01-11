@@ -4,9 +4,9 @@ import figlet from 'figlet';
 import { DateTime } from 'luxon';
 
 import { InternalCrmClient } from './client/internal-crm-client';
-import { Lead } from './model/lead';
 import { SalesforceClient } from './client/salesforce-client';
 import { fromSalesforceLead, fromThriftInternalLeadDto } from './mapper/lead-mapper';
+import { Lead } from './model/lead';
 
 const httpClient = axios.create({
   baseURL: process.env.API_BASE_URL ?? 'http://localhost:8080',
@@ -14,7 +14,7 @@ const httpClient = axios.create({
 
 const logger = {
   debug: (msg: string): void => {
-    if (true) {
+    if (process.env.DEBUG === '1') {
       console.log(`[debug] ${msg}`);
     }
   },
@@ -117,19 +117,16 @@ program
   .command('merge')
   .description('Ajoute les leads de salesforce  dans internalCRM')
   .action(async () => {
-
-    
     const salesforceClient = await SalesforceClient.Build();
     const salesforcesLeads = await salesforceClient.getSalesforceLeads();
     const internalCrmClient = new InternalCrmClient();
-    
+
     const initialLeadCount = await internalCrmClient.countLeads();
-    
+
     await internalCrmClient.mergeLeads(salesforcesLeads.map(fromSalesforceLead));
     const leads = (await internalCrmClient.getAllLeads()).map(fromThriftInternalLeadDto);
 
-    console.log(`${leads.length - initialLeadCount} leads ajoutés (de ${initialLeadCount} à ${leads.length})`)
-
+    console.log(`${leads.length - initialLeadCount} leads ajoutés (de ${initialLeadCount} à ${leads.length})`);
   });
 
 program.description("Un CLI pour appeler l'api VirtualCRM");

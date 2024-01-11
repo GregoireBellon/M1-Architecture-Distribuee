@@ -1,22 +1,25 @@
-
 services:
   client:
     depends_on:
       - internal
-    build: 
+    build:
       context: ../../../
       dockerfile: docker/dockerfiles/SimpleClient/main.Dockerfile
 
     command: sh -c "sleep 15 && npm run test"
 
     environment:
+      - SF_CLIENT_ID=${SF_CLIENT_ID}
+      - SF_CLIENT_SECRET=${SF_CLIENT_SECRET}
+      - SF_USERNAME=${SF_USERNAME}
+      - SF_PASSWORD=${SF_PASSWORD}
+      - SF_TENANT=${SF_TENANT}
       - THRIFT_HOST=internal
       - THRIFT_PORT=9090
 
   internal:
-    build: 
+    build:
       context: ../../../
       dockerfile: docker/dockerfiles/InternalCRM/main.Dockerfile
-    
-    command: gradle run
 
+    command: gradle run
