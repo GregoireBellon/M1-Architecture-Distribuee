@@ -1,7 +1,6 @@
 package com.ArchiDistribuee.VirtualCRM.entity;
 
 import java.time.ZonedDateTime;
-import java.util.Calendar;
 
 import com.ArchiDistribuee.VirtualCRM.mapper.VirtualLeadMapper;
 import com.fasterxml.jackson.databind.PropertyNamingStrategies;
