@@ -64,3 +64,13 @@ to query the CRMs depending on the salary :
 ```
 npm run start salary 20000 70000
 ```
+to merge leads of salesforce into InternalLeadCRM : 
+```
+npm run start merge
+```
+
+You can also test the application, by running
+
+```
+npm run test
+```
