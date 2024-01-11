@@ -1,4 +1,4 @@
-package internalcrm.models;
+package internalcrm.entity;
 
 import java.time.ZonedDateTime;
 

@@ -4,7 +4,7 @@ import java.util.Set;
 
 import org.mapstruct.Mapper;
 
-import internalcrm.models.InternalLead;
+import internalcrm.entity.InternalLead;
 import internalcrm.services.thrift.impl.ThriftInternalLeadDTO;;
 
 @Mapper
