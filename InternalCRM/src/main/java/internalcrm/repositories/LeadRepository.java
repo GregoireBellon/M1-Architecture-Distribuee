@@ -11,19 +11,19 @@ import java.util.stream.Collectors;
 
 import com.github.javafaker.Faker;
 
-import internalcrm.entity.InternalLead;
+import internalcrm.models.Lead;
 
 public class LeadRepository {
 
     private static LeadRepository instance = null;
 
     private static final Faker faker = new Faker(Locale.FRENCH);
-    private static final Set<InternalLead> leadDTOs = new HashSet<>();
+    private static final Set<Lead> leadDTOs = new HashSet<>();
 
     static {
         for (int i = 0; i < 50; i++) {
             leadDTOs.add(
-                    new InternalLead(UUID.randomUUID().toString(),
+                    new Lead(UUID.randomUUID().toString(),
                             faker.name().lastName() + ", " + faker.name().firstName(),
                             faker.number().randomDouble(2, 25, 125),
                             faker.phoneNumber().cellPhone(),
@@ -50,21 +50,21 @@ public class LeadRepository {
         return instance;
     }
 
-    public Set<InternalLead> findLeadsBySalary(double minSalaire, double maxSalaire) {
+    public Set<Lead> findLeadsBySalary(double minSalaire, double maxSalaire) {
         return LeadRepository.leadDTOs.stream()
                 .filter(lead -> lead.getAnnualRevenue() >= minSalaire)
                 .filter(lead -> lead.getAnnualRevenue() <= maxSalaire)
                 .collect(Collectors.toSet());
     }
 
-    public Set<InternalLead> findLeadsByCreationDate(ZonedDateTime minDate, ZonedDateTime maxDate) {
+    public Set<Lead> findLeadsByCreationDate(ZonedDateTime minDate, ZonedDateTime maxDate) {
         return LeadRepository.leadDTOs.stream()
                 .filter(lead -> lead.getCreationDate() == null ? false : lead.getCreationDate().isBefore(maxDate))
                 .filter(lead -> lead.getCreationDate() == null ? false : lead.getCreationDate().isAfter(minDate))
                 .collect(Collectors.toSet());
     }
 
-    public void addLead(InternalLead internalLead) {
+    public void addLead(Lead internalLead) {
         LeadRepository.leadDTOs.add(internalLead);
     }
 
@@ -72,7 +72,7 @@ public class LeadRepository {
         return LeadRepository.leadDTOs.removeIf(lead -> lead.getId().equals(leadId));
     }
 
-    public Set<InternalLead> findAll() {
+    public Set<Lead> findAll() {
         return LeadRepository.leadDTOs;
     }
 

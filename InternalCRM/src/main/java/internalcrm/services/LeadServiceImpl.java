@@ -10,6 +10,7 @@ import org.mapstruct.factory.Mappers;
 
 import internalcrm.entity.InternalLead;
 import internalcrm.mappers.LeadMapper;
+import internalcrm.models.Lead;
 import internalcrm.repositories.LeadRepository;
 import internalcrm.services.thrift.impl.ThriftInternalLeadDTO;
 import internalcrm.services.thrift.impl.LeadService;
@@ -54,7 +55,7 @@ public class LeadServiceImpl implements LeadService.Iface {
     @Override
     public void addLead(ThriftInternalLeadDTO lead) throws TException {
 
-        InternalLead internal = leadMapper.toInternalLead(lead);
+        Lead internal = leadMapper.toInternalLead(lead);
 
         internal.setId(UUID.randomUUID().toString());
 
