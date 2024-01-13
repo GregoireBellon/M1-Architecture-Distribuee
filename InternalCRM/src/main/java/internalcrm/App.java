@@ -8,6 +8,9 @@ import org.apache.thrift.server.TServer.Args;
 import org.apache.thrift.server.TSimpleServer;
 import org.apache.thrift.transport.TServerSocket;
 import org.apache.thrift.transport.TServerTransport;
+
+import internalcrm.repositories.LeadRepository;
+import internalcrm.repositories.LeadRepositoryImpl;
 import internalcrm.services.LeadServiceImpl;
 import internalcrm.services.thrift.impl.LeadService;
 import lombok.extern.slf4j.Slf4j;
@@ -16,17 +19,20 @@ import lombok.extern.slf4j.Slf4j;
 public class App {
 
     public static LeadServiceImpl handler;
+    public static LeadRepository repository;
 
     public static LeadService.Processor<LeadServiceImpl> processor;
 
     public static void main(String[] args) {
         try {
-            handler = LeadServiceImpl.getInstance();
+            repository = LeadRepositoryImpl.getInstance();
+            handler = LeadServiceImpl.getInstance(repository);
+
             processor = new LeadService.Processor<LeadServiceImpl>(handler);
 
             Runnable simple = new Runnable() {
                 public void run() {
-                    simple(processor);
+                    startSynchronousServer(processor);
                 }
             };
 
@@ -37,7 +43,7 @@ public class App {
         }
     }
 
-    public static void simple(LeadService.Processor<LeadServiceImpl> processor) {
+    public static void startSynchronousServer(LeadService.Processor<LeadServiceImpl> processor) {
         try {
             TServerTransport serverTransport = new TServerSocket(9090);
             TServer server = new TSimpleServer(new Args(serverTransport).processor(processor));

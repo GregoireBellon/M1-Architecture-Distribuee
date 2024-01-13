@@ -3,6 +3,8 @@ package com.ArchiDistribuee.VirtualCRM.repository;
 
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
 import java.time.ZoneId;
 import java.time.ZonedDateTime;
 import java.util.Set;

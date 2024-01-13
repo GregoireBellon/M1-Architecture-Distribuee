@@ -17,20 +17,21 @@ import internalcrm.services.thrift.impl.LeadService;
 
 public class LeadServiceImpl implements LeadService.Iface {
 
-    private final static LeadRepository leadRepository = LeadRepository.getInstance();
-    private final static LeadMapper leadMapper = Mappers.getMapper(LeadMapper.class);
+    private final LeadRepository leadRepository;
+    private final LeadMapper leadMapper = Mappers.getMapper(LeadMapper.class);
 
     private static LeadServiceImpl instance = null;
 
-    private LeadServiceImpl() {
+    private LeadServiceImpl(LeadRepository leadRepository) {
+        this.leadRepository = leadRepository;
     }
 
-    public static LeadServiceImpl getInstance() {
+    public static LeadServiceImpl getInstance(LeadRepository leadRepository) {
 
         if (instance != null)
             return instance;
 
-        LeadServiceImpl.instance = new LeadServiceImpl();
+        LeadServiceImpl.instance = new LeadServiceImpl(leadRepository);
 
         return instance;
     }
@@ -46,10 +47,10 @@ public class LeadServiceImpl implements LeadService.Iface {
     }
 
     @Override
-    public Set<ThriftInternalLeadDTO> getLeadsByDate(String borneInfSalaire, String borneSupSalaire) throws TException {
+    public Set<ThriftInternalLeadDTO> getLeadsByDate(String borneInfDate, String borneSupDate) throws TException {
         return leadMapper.toInternalLeadDto(
-                leadRepository.findLeadsByCreationDate(ZonedDateTime.parse(borneInfSalaire),
-                        ZonedDateTime.parse(borneSupSalaire)));
+                leadRepository.findLeadsByCreationDate(ZonedDateTime.parse(borneInfDate),
+                        ZonedDateTime.parse(borneSupDate)));
     }
 
     @Override
