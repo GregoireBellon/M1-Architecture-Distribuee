@@ -16,7 +16,6 @@ import lombok.extern.slf4j.Slf4j;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-@Slf4j
 public class InternalLead implements GenericLead{
     private String id;
     private String name;
@@ -29,26 +28,6 @@ public class InternalLead implements GenericLead{
     private ZonedDateTime creationDate;
     private String company;
     private String state;
-
-    public String getLastName() {
-        String[] words = this.name.split(", ");
-        if (words.length < 2) {
-            log.error("Invalid name: " + this.name + "for Internal lead (id=" + this.id +
-                    ")");
-            return "";
-        }
-        return words[0];
-    }
-
-    public String getFirstName() {
-        String[] words = this.name.split(", ");
-        if (words.length < 2) {
-            log.error("Invalid name: " + this.name + "for Internal lead (id=" + this.id +
-                    ")");
-            return "";
-        }
-        return words[1];
-    }
 
     @Override
     public boolean equals(Object obj) {
