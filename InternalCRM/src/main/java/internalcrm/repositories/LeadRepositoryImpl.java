@@ -11,7 +11,7 @@ import java.util.stream.Collectors;
 
 import com.github.javafaker.Faker;
 
-import internalcrm.models.Lead;
+import internalcrm.entity.Lead;
 
 public class LeadRepositoryImpl implements LeadRepository {
 

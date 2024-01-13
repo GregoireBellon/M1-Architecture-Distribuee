@@ -8,9 +8,8 @@ import java.util.stream.Collectors;
 import org.apache.thrift.TException;
 import org.mapstruct.factory.Mappers;
 
-import internalcrm.entity.InternalLead;
+import internalcrm.entity.Lead;
 import internalcrm.mappers.LeadMapper;
-import internalcrm.models.Lead;
 import internalcrm.repositories.LeadRepository;
 import internalcrm.services.thrift.impl.ThriftInternalLeadDTO;
 import internalcrm.services.thrift.impl.LeadService;

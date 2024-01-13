@@ -3,7 +3,7 @@ package internalcrm.repositories;
 import java.time.ZonedDateTime;
 import java.util.Set;
 
-import internalcrm.models.Lead;
+import internalcrm.entity.Lead;
 
 public interface LeadRepository {
 
