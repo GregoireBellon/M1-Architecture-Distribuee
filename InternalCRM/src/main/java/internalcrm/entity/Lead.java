@@ -13,7 +13,7 @@ import lombok.ToString;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class InternalLead {
+public class Lead {
     private String id;
     private String name;
     private double annualRevenue;
@@ -31,7 +31,7 @@ public class InternalLead {
         if(obj == this){
             return true;
         }
-        if(obj instanceof InternalLead i){
+        if(obj instanceof Lead i){
             return i.getId() == this.getId();
         }
         return false;

@@ -10,6 +10,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import internalcrm.services.thrift.impl.ThriftInternalLeadDTO;
+import internalcrm.repositories.LeadRepositoryImpl;
 import internalcrm.services.thrift.impl.LeadService;
 
 public class LeadServiceTest {
@@ -18,7 +19,8 @@ public class LeadServiceTest {
 
     @BeforeEach
     private void initLeadService() {
-        this.leadService = LeadServiceImpl.getInstance();
+        final var repository = LeadRepositoryImpl.getInstance();
+        this.leadService = LeadServiceImpl.getInstance(repository);
     }
 
     @Test

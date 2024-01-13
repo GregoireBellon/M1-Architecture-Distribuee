@@ -2,7 +2,6 @@ package com.ArchiDistribuee.VirtualCRM.entity;
 
 import java.time.ZonedDateTime;
 
-
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -12,7 +11,7 @@ import lombok.Setter;
 @NoArgsConstructor
 @Getter
 @Setter
-public class VirtualLead {
+public class VirtualLead implements GenericLead {
     private String firstName;
     private String lastName;
     private double annualRevenue;
@@ -25,5 +24,10 @@ public class VirtualLead {
     private GeographicPoint geographicPoint;
     private String company;
     private String state;
+
+    @Override
+    public VirtualLead toVirtualLead() {
+        return this;
+    }
 
 }

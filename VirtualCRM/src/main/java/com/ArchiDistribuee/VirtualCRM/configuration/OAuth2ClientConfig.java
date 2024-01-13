@@ -1,4 +1,4 @@
-package com.ArchiDistribuee.VirtualCRM.config;
+package com.ArchiDistribuee.VirtualCRM.configuration;
 
 import java.util.HashMap;
 
