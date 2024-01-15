@@ -43,7 +43,7 @@ You can also test the application, by running
 ./gradlew test
 ```
 
-The OpenStreetMap API is not called by default to prevent ban issues. To change this behaviour you can set the `ACTIVATE_OSM` flag to true in `VirtualCRM/src/main/java/com/ArchiDistribuee/VirtualCRM/service/VirtualLeadService.java`
+The OpenStreetMap API is by default for demonstration purpose, but if you want to make ambitious request, you shoud disable it in order to not be banned. To change this behaviour you can set the `ACTIVATE_OSM` flag to false in `VirtualCRM/src/main/java/com/ArchiDistribuee/VirtualCRM/service/VirtualLeadService.java`
 
 ### SimpleClient
 You need to have node 18 (or highter) installed on your computer, and a recent thrift version.
@@ -71,6 +71,8 @@ to merge leads of salesforce into InternalLeadCRM :
 ```
 npm run start merge
 ```
+
+⚠️THOSE LAST REQUESTS WERE SPECIFICALLY TAILORED TO SHOWCASE THE OSM INTEGRATION PLEASE DON'T DO OTHER REQUEST WITH `ACTIVATE_OSM` TRUE ⚠️
 
 You can also test the application, by running
 

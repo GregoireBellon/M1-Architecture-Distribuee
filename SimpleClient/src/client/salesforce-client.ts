@@ -40,7 +40,7 @@ export class SalesforceClient {
 
   public async getSalesforceLeads(): Promise<SalesforceLead[]> {
     const { data } = await axios.get<SalesforceLeadResponse>(
-      `https://${process.env.SF_TENANT}.my.salesforce.com/services/data/v45.0/query/`,
+      `https://${process.env.SF_TENANT}.my.salesforce.com/services/data/v59.0/query/`,
       {
         params: {
           q: 'SELECT FirstName, LastName, AnnualRevenue, Phone, Street, City, State, Company, CreatedDate, PostalCode , Country FROM Lead ',

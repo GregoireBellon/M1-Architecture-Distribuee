@@ -38,7 +38,7 @@ public class LeadRepositoryImpl implements LeadRepository {
         }
         leadDTOs.add(new Lead(UUID.randomUUID().toString(), "Monsieur InternalCRM", 30000, "0666666666",
                 "12 Rue de Sébastopol", "67000", "Strasbourg", "France",
-                ZonedDateTime.of(2023, 1, 15, 0, 0, 0, 0, ZoneId.systemDefault()), "Facebook", "Alsace"));
+                ZonedDateTime.of(2024, 1, 15, 12, 0, 0, 0, ZoneId.systemDefault()), "Facebook", "Alsace"));
     }
 
     private LeadRepositoryImpl() {

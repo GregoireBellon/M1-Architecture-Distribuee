@@ -26,7 +26,7 @@ import lombok.extern.slf4j.Slf4j;
 public class VirtualLeadService {
 
     // Activating this will likely ban your ip from the nominatim API;
-    private final static boolean ACTIVATE_OSM = false;
+    private final static boolean ACTIVATE_OSM = true;
 
     private final OpenStreetMapRepository openStreetMapRepository;
     private final Set<GenericCRMRepository> crmRepositories = new HashSet<>();
