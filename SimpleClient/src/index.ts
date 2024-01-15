@@ -1,5 +1,6 @@
 import axios from 'axios';
 import { Command } from 'commander';
+import * as dotenv from 'dotenv';
 import figlet from 'figlet';
 import { DateTime } from 'luxon';
 
@@ -7,6 +8,8 @@ import { InternalCrmClient } from './client/internal-crm-client';
 import { SalesforceClient } from './client/salesforce-client';
 import { fromSalesforceLead, fromThriftInternalLeadDto } from './mapper/lead-mapper';
 import { Lead } from './model/lead';
+
+dotenv.config();
 
 const httpClient = axios.create({
   baseURL: process.env.API_BASE_URL ?? 'http://localhost:8080',

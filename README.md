@@ -42,6 +42,9 @@ You can also test the application, by running
 ```
 ./gradlew test
 ```
+
+The OpenStreetMap API is not called by default to prevent ban issues. To change this behaviour you can set the `ACTIVATE_OSM` flag to true in `VirtualCRM/src/main/java/com/ArchiDistribuee/VirtualCRM/service/VirtualLeadService.java`
+
 ### SimpleClient
 You need to have node 18 (or highter) installed on your computer, and a recent thrift version.
 Into ./SimpleClient :
@@ -58,11 +61,11 @@ npm run start help
 
 to query the CRMs depending on the date :
 ```
-npm run start date 20/02/2020 25/09/2023
+npm run start date 14/01/2024 16/01/2024
 ```
 to query the CRMs depending on the salary :
 ```
-npm run start salary 20000 70000
+npm run start salary 10000 100000 Alsace
 ```
 to merge leads of salesforce into InternalLeadCRM : 
 ```

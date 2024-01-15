@@ -33,8 +33,12 @@ public class LeadRepositoryImpl implements LeadRepository {
                             faker.address().country(),
                             faker.date().past(30 * 365, TimeUnit.DAYS).toInstant().atZone(ZoneId.systemDefault()),
                             faker.company().name(),
+
                             faker.address().state()));
         }
+        leadDTOs.add(new Lead(UUID.randomUUID().toString(), "Monsieur InternalCRM", 30000, "0666666666",
+                "12 Rue de Sébastopol", "67000", "Strasbourg", "France",
+                ZonedDateTime.of(2023, 1, 15, 0, 0, 0, 0, ZoneId.systemDefault()), "Facebook", "Alsace"));
     }
 
     private LeadRepositoryImpl() {
