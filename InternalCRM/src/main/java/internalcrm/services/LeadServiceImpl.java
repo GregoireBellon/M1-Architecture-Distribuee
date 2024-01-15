@@ -38,18 +38,26 @@ public class LeadServiceImpl implements LeadService.Iface {
     @Override
     public Set<ThriftInternalLeadDTO> getLeads(double borneInfSalaire, double borneSupSalaire, String state)
             throws TException {
-        return leadMapper.toInternalLeadDto(
+        var leadsRet = leadMapper.toInternalLeadDto(
                 leadRepository.findLeadsBySalary(borneInfSalaire, borneSupSalaire)
                         .stream().filter(lead -> lead.getState().equalsIgnoreCase(state))
                         .collect(Collectors.toSet()));
+
+        System.out.println("Returned " + leadsRet.size() + " leads by salary");
+
+        return leadsRet;
 
     }
 
     @Override
     public Set<ThriftInternalLeadDTO> getLeadsByDate(String borneInfDate, String borneSupDate) throws TException {
-        return leadMapper.toInternalLeadDto(
+        var leadsRet = leadMapper.toInternalLeadDto(
                 leadRepository.findLeadsByCreationDate(ZonedDateTime.parse(borneInfDate),
                         ZonedDateTime.parse(borneSupDate)));
+
+        System.out.println("Returned " + leadsRet.size() + " leads by date");
+
+        return leadsRet;
     }
 
     @Override
@@ -58,6 +66,9 @@ public class LeadServiceImpl implements LeadService.Iface {
         Lead internal = leadMapper.toInternalLead(lead);
 
         internal.setId(UUID.randomUUID().toString());
+
+        System.out.println("Ajout du lead : ");
+        System.out.println(internal);
 
         leadRepository.addLead(internal);
     }
@@ -85,5 +96,5 @@ public class LeadServiceImpl implements LeadService.Iface {
     public double countLeads() throws TException {
         return leadRepository.findAll().size();
     }
-    
+
 }
