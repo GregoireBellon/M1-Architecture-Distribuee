@@ -12,6 +12,7 @@ import lombok.Setter;
 @Getter
 @Setter
 public class VirtualLead implements GenericLead {
+    private String id;
     private String firstName;
     private String lastName;
     private double annualRevenue;

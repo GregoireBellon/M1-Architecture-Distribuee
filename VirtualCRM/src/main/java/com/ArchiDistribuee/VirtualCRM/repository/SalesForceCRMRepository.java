@@ -20,7 +20,7 @@ public class SalesForceCRMRepository implements GenericCRMRepository {
         public Set<SalesForceLead> getLeads(double lowAnnualRevenue, double highAnnualRevenue, String state) {
                 int lowAnnualRevenueInt = (int) lowAnnualRevenue;
                 int highAnnualRevenueInt = (int) highAnnualRevenue;
-                String query = "SELECT FirstName, LastName, AnnualRevenue, Phone, Street, City, State, Company ,CreatedDate , PostalCode , Country  FROM Lead"
+                String query = "SELECT Id, FirstName, LastName, AnnualRevenue, Phone, Street, City, State, Company ,CreatedDate , PostalCode , Country  FROM Lead"
                                 + " WHERE AnnualRevenue > " + lowAnnualRevenueInt + " AND AnnualRevenue < "
                                 + highAnnualRevenueInt + " AND State = " + "'" + state + "'";
 

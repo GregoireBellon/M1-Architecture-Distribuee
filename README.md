@@ -63,10 +63,17 @@ to query the CRMs depending on the date :
 ```
 npm run start date 14/01/2024 16/01/2024
 ```
+
+Anticipated result : 3 leads. 1 from Internal (Monsieur InternalCRM) and 2 from Saleforce 
+
+
 to query the CRMs depending on the salary :
 ```
 npm run start salary 10000 100000 Alsace
 ```
+
+Anticipated result : 2 leads. 1 from Saleforce (Jack Roger) and 1 from InternalCRM (Monsieur InternalCRM)
+
 to merge leads of salesforce into InternalLeadCRM : 
 ```
 npm run start merge
